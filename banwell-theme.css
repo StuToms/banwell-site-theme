@@ -147,11 +147,10 @@ h1, h2, h3, h4, h5, h6,
 /* ==========================================================================
    HOMEPAGE: HIDE RECENT MATCH REPORTS (TEMPORARY)
    ========================================================================== */
-/* Hides recent match report cards while keeping the bottom fixture ticker intact */
-.recent-match-reports,
-.match-reports,
-.match-report-item,
-div:has(> a[href*="/match-report/"]),
-a[href*="/match-report/"] {
+/* Targets the parent grid columns and card containers holding match reports */
+[class*="col-"]:has(a[href*="/match-report"]),
+div[class*="report"]:has(a[href*="/match-report"]),
+.card:has(a[href*="/match-report"]),
+.panel:has(a[href*="/match-report"]) {
   display: none !important;
 }
