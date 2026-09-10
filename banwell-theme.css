@@ -1,0 +1,145 @@
+/* ==========================================================================
+   BANWELL FOOTBALL CLUB - MASTER THEME STYLESHEET
+   Platform: MyClubPro V3
+   Repository: banwell-site-theme
+   ========================================================================== */
+
+/* --- 1. FONTS & DESIGN TOKENS --- */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root {
+  --banwell-red: #b3001b;
+  --banwell-dark-red: #800010;
+  --banwell-black: #000000;
+  --banwell-charcoal: #141414;
+  --banwell-border: #1a1a1a;
+  --banwell-text: #222222;
+  --banwell-muted: #888888;
+}
+
+/* Base Body Typography */
+body {
+  font-family: 'Montserrat', sans-serif !important;
+  color: var(--banwell-text);
+}
+
+/* Headings & Display Elements (Bebas Neue) */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+#team-name,
+.fjalla-text,
+.border-button,
+.btn-primary,
+.nav-link {
+  font-family: 'Bebas Neue', sans-serif !important;
+  letter-spacing: 1px !important;
+}
+
+/* --- 2. HEADER TOP & BRANDING BAR --- */
+.header-top {
+  background-color: var(--banwell-black) !important;
+  border-bottom: 1px solid var(--banwell-border) !important;
+  padding: 12px 0 !important;
+}
+
+#team-name {
+  color: #ffffff !important;
+  font-size: 32px !important;
+  letter-spacing: 1.5px !important;
+}
+
+#slogan {
+  color: var(--banwell-muted) !important;
+}
+
+/* Club Crest Replacement */
+#badge {
+  background: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984804309-43926/0/thumbnail_CustomPageImage.jpg') center / contain no-repeat !important;
+  background-color: transparent !important;
+}
+
+/* England Football 2-Star Accreditation Badge */
+.charter-standard img {
+  content: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984046744-28507/0/thumbnail_CustomPageImage.jpg') !important;
+  height: 62px !important;
+  width: auto !important;
+}
+
+/* --- 3. MAIN NAVIGATION BAR --- */
+.club-colour-bg {
+  background-color: var(--banwell-black) !important;
+}
+
+.club-colour-border-top,
+.club-colour-border-bottom {
+  border-color: var(--banwell-red) !important;
+}
+
+/* Top Navbar Links */
+.navbar-nav .nav-link {
+  font-size: 20px !important;
+  color: #ffffff !important;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Top Navbar Hover State */
+.navbar-nav .nav-link:hover,
+.navbar-nav .active > .nav-link {
+  color: var(--banwell-red) !important;
+}
+
+/* --- 4. SUB-PAGE & TEAM SECONDARY TABS --- */
+/* (Fixtures & Results, Overview, Players, Tables) */
+.nav:not(.navbar-nav) .nav-link {
+  font-size: 20px !important;
+  color: #222222 !important;
+  transition: color 0.2s ease-in-out;
+}
+
+.nav:not(.navbar-nav) .nav-link:hover,
+.nav:not(.navbar-nav) .nav-link.active,
+.nav:not(.navbar-nav) .active > .nav-link {
+  color: var(--banwell-red) !important;
+}
+
+/* --- 5. TEAMS MEGA-MENU DROPDOWN --- */
+.mega-menu .team-list-columns .team-menu-item {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.mega-menu .team-list-columns .team-menu-item a {
+  color: #222222 !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 500;
+  display: block;
+  width: 100%;
+  padding: 4px 0;
+  text-decoration: none !important;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mega-menu .team-list-columns .team-menu-item a:hover {
+  color: var(--banwell-red) !important;
+  transform: translateX(6px);
+}
+
+/* --- 6. BUTTONS & INTERACTIVE ACCENTS --- */
+.club-colour {
+  color: var(--banwell-red) !important;
+}
+
+.border-button,
+.btn-primary {
+  background-color: var(--banwell-red) !important;
+  border: 1px solid var(--banwell-dark-red) !important;
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.border-button:hover,
+.btn-primary:hover {
+  background-color: var(--banwell-dark-red) !important;
+  border-color: var(--banwell-black) !important;
+  color: #ffffff !important;
+}
