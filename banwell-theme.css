@@ -156,112 +156,147 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   NAVIGATION: DARK MODE DROPDOWNS & FLUID ANIMATION
+   NAVIGATION: DARK MODE DROPDOWNS & ROLL-DOWN REVEAL
    ========================================================================== */
 
-/* 1. Dropdown Entrance Animation */
-@keyframes bfcDropdownSlide {
-  from {
+/* 1. Smooth Roller-Blind Unroll Animation */
+@keyframes bfcRollDown {
+  0% {
     opacity: 0;
-    transform: translateY(12px);
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-6px);
   }
-  to {
+  100% {
     opacity: 1;
+    clip-path: inset(0 0 0 0);
     transform: translateY(0);
   }
 }
 
-/* 2. Menu Containers (Standard & Mega Menus) */
+/* 2. Menu Containers (Standard Dropdowns & Teams Mega Menu) */
 .dropdown-menu,
 .navbar-nav .dropdown-menu,
 .mega-dropdown-menu {
-  background: #11141b !important;
-  background-color: #11141b !important;
+  background: #0f1218 !important;
+  background-color: #0f1218 !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-top: 3px solid #b3001b !important;
   border-radius: 0 0 8px 8px !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75) !important;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8) !important;
   padding: 12px 0 !important;
-  animation: bfcDropdownSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: bfcRollDown 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
-/* Fix for full-width Mega Menu (Teams) */
+/* Teams Mega-Menu Container Sizing */
 .dropdown-menu.mega-menu,
 .mega-dropdown-menu,
-.dropdown-menu:has(.col-md-3, .col-md-4, .col-sm-4, [class*="col-"]) {
-  background: #11141b !important;
-  padding: 24px 28px !important;
+.dropdown-menu:has([class*="col-"]) {
+  padding: 24px 30px !important;
 }
 
-/* 3. Dropdown Menu Links (Club Info, Contact, etc.) */
-.dropdown-menu > li > a,
-.dropdown-menu a,
-.navbar-nav .dropdown-menu > li > a {
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #d1d5db !important;
-  padding: 10px 20px !important;
-  line-height: 1.4 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
-  transition: all 0.18s ease-in-out !important;
-  display: block !important;
+/* Strip default list bullets, margins, and duplicate borders */
+.dropdown-menu ul,
+.dropdown-menu ol,
+.dropdown-menu li,
+.dropdown-menu [class*="col-"] ul,
+.dropdown-menu [class*="col-"] li {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-bottom: none !important;
   background: transparent !important;
 }
 
-/* Clean up last child divider */
-.dropdown-menu > li:last-child > a,
-.dropdown-menu a:last-child {
-  border-bottom: none !important;
+/* 3. Standard Dropdown Links (Club Info, Contact, etc.) */
+.dropdown-menu > li > a,
+.navbar-nav .dropdown-menu > li > a {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #e5e7eb !important;
+  padding: 10px 22px !important;
+  line-height: 1.4 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: all 0.15s ease !important;
+  display: block !important;
 }
 
-/* Hover & Active States */
 .dropdown-menu > li > a:hover,
-.dropdown-menu a:hover,
 .navbar-nav .dropdown-menu > li > a:hover {
-  background: rgba(179, 0, 27, 0.18) !important;
+  background: rgba(179, 0, 27, 0.22) !important;
   color: #ffffff !important;
-  padding-left: 24px !important;
+  padding-left: 26px !important;
   border-left: 3px solid #b3001b !important;
 }
 
-/* 4. Teams Mega-Menu Headings & Layout */
-.dropdown-menu h2,
-.dropdown-menu h3,
-.dropdown-menu h4,
-.dropdown-menu .title,
-.dropdown-menu [class*="title"] {
+/* 4. Teams Mega-Menu Column Headers (Adults, Youth, 1st Team) */
+.dropdown-menu [class*="col-"] h2,
+.dropdown-menu [class*="col-"] h3,
+.dropdown-menu [class*="col-"] h4,
+.dropdown-menu [class*="col-"] .title,
+.dropdown-menu [class*="col-"] [class*="title"] {
+  display: inline-block !important;
   font-family: 'Bebas Neue', sans-serif !important;
   color: #b3001b !important;
   font-size: 22px !important;
   letter-spacing: 1px !important;
-  margin-bottom: 12px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding-bottom: 6px !important;
+  margin: 0 4px 10px 0 !important;
+  padding: 0 !important;
+  border: none !important;
   text-transform: uppercase !important;
+  vertical-align: middle !important;
 }
 
-/* Mega-Menu Columns & Borders */
-.dropdown-menu [class*="col-"] {
+/* Realign the '>' category arrow inline next to Adults and Youth */
+.dropdown-menu [class*="col-"] h4 + a,
+.dropdown-menu [class*="col-"] h3 + a,
+.dropdown-menu [class*="col-"] .title + a,
+.dropdown-menu [class*="col-"] a[href*="/category/"],
+.dropdown-menu [class*="col-"] a[href*="/teams/adults"],
+.dropdown-menu [class*="col-"] a[href*="/teams/youth"],
+.dropdown-menu [class*="col-"] a:has(> .fa-chevron-right),
+.dropdown-menu [class*="col-"] a:has(> .fa-angle-right) {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  color: #b3001b !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  padding: 0 0 0 4px !important;
+  margin: 0 0 10px 0 !important;
+  border: none !important;
+  border-bottom: none !important;
   background: transparent !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
+/* 5. Crisp, High-Contrast Team Name Links */
 .dropdown-menu [class*="col-"] a {
-  padding: 7px 8px !important;
-  font-size: 12.5px !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  display: block !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #f3f4f6 !important; /* High-contrast crisp off-white */
+  padding: 6px 8px !important;
+  line-height: 1.4 !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 3px !important;
+  transition: all 0.15s ease !important;
+  text-decoration: none !important;
 }
 
+/* Team Link Hover State */
 .dropdown-menu [class*="col-"] a:hover {
-  border-left: none !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-radius: 4px;
+  color: #ffffff !important;
+  background: rgba(179, 0, 27, 0.28) !important;
+  padding-left: 12px !important;
+  border-left: 2px solid #b3001b !important;
 }
 
-/* Mega-Menu Image Styling (1st Team Photo) */
+/* First Team Photo Styling */
 .dropdown-menu img {
   border-radius: 6px !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
 }
