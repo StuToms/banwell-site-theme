@@ -154,3 +154,114 @@ div[class*="report"]:has(a[href*="/match-report"]),
 .panel:has(a[href*="/match-report"]) {
   display: none !important;
 }
+
+/* ==========================================================================
+   NAVIGATION: DARK MODE DROPDOWNS & FLUID ANIMATION
+   ========================================================================== */
+
+/* 1. Dropdown Entrance Animation */
+@keyframes bfcDropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 2. Menu Containers (Standard & Mega Menus) */
+.dropdown-menu,
+.navbar-nav .dropdown-menu,
+.mega-dropdown-menu {
+  background: #11141b !important;
+  background-color: #11141b !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-top: 3px solid #b3001b !important;
+  border-radius: 0 0 8px 8px !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75) !important;
+  padding: 12px 0 !important;
+  animation: bfcDropdownSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Fix for full-width Mega Menu (Teams) */
+.dropdown-menu.mega-menu,
+.mega-dropdown-menu,
+.dropdown-menu:has(.col-md-3, .col-md-4, .col-sm-4, [class*="col-"]) {
+  background: #11141b !important;
+  padding: 24px 28px !important;
+}
+
+/* 3. Dropdown Menu Links (Club Info, Contact, etc.) */
+.dropdown-menu > li > a,
+.dropdown-menu a,
+.navbar-nav .dropdown-menu > li > a {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #d1d5db !important;
+  padding: 10px 20px !important;
+  line-height: 1.4 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  transition: all 0.18s ease-in-out !important;
+  display: block !important;
+  background: transparent !important;
+}
+
+/* Clean up last child divider */
+.dropdown-menu > li:last-child > a,
+.dropdown-menu a:last-child {
+  border-bottom: none !important;
+}
+
+/* Hover & Active States */
+.dropdown-menu > li > a:hover,
+.dropdown-menu a:hover,
+.navbar-nav .dropdown-menu > li > a:hover {
+  background: rgba(179, 0, 27, 0.18) !important;
+  color: #ffffff !important;
+  padding-left: 24px !important;
+  border-left: 3px solid #b3001b !important;
+}
+
+/* 4. Teams Mega-Menu Headings & Layout */
+.dropdown-menu h2,
+.dropdown-menu h3,
+.dropdown-menu h4,
+.dropdown-menu .title,
+.dropdown-menu [class*="title"] {
+  font-family: 'Bebas Neue', sans-serif !important;
+  color: #b3001b !important;
+  font-size: 22px !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 12px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding-bottom: 6px !important;
+  text-transform: uppercase !important;
+}
+
+/* Mega-Menu Columns & Borders */
+.dropdown-menu [class*="col-"] {
+  background: transparent !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.dropdown-menu [class*="col-"] a {
+  padding: 7px 8px !important;
+  font-size: 12.5px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.dropdown-menu [class*="col-"] a:hover {
+  border-left: none !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 4px;
+}
+
+/* Mega-Menu Image Styling (1st Team Photo) */
+.dropdown-menu img {
+  border-radius: 6px !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4) !important;
+}
