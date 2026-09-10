@@ -82,6 +82,7 @@ h1, h2, h3, h4, h5, h6,
   transition: color 0.2s ease-in-out;
 }
 
+/* Top Navbar Hover State */
 .navbar-nav .nav-link:hover,
 .navbar-nav .active > .nav-link {
   color: var(--banwell-red) !important;
@@ -130,22 +131,21 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   NAVIGATION: BUTTERY SMOOTH VELVET REVEAL & HIGH CONTRAST OVERRIDES
+   7. NAVIGATION: BUTTERY SMOOTH VELVET REVEAL (0.38s Apple Deceleration)
    ========================================================================== */
 
-/* 1. Buttery Velvet Motion Curve (0.42s cubic-bezier deceleration) */
-@keyframes bfcVelvetGlide {
+@keyframes bfcButteryGlide {
   0% {
     opacity: 0;
-    transform: translate3d(0, -14px, 0) scale(0.985);
+    transform: translateY(-10px);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translateY(0);
   }
 }
 
-/* 2. Menu Containers (Standard Dropdowns & Mega Menus) */
+/* Base Dropdown Container */
 .dropdown-menu,
 .navbar-nav .dropdown-menu,
 .mega-dropdown-menu,
@@ -156,96 +156,27 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 0 0 6px 6px !important;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9) !important;
-  animation: bfcVelvetGlide 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  animation: bfcButteryGlide 0.38s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
   will-change: transform, opacity !important;
-}
-
-/* Sizing for Standard Dropdowns (Club Info, Contact) */
-.navbar-nav > li:not(.mega-dropdown) > .dropdown-menu,
-.dropdown-menu:not(:has([class*="col-"])) {
-  min-width: 280px !important;
+  min-width: 285px !important; /* Fixes Club Info width without broken :has() syntax */
   padding: 8px 0 !important;
 }
 
-/* Standard Dropdown Link Styling */
-.dropdown-menu > li > a,
-.dropdown-menu > a {
-  display: block !important;
-  color: #ffffff !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 13.5px !important;
-  font-weight: 500 !important;
-  padding: 10px 22px !important;
-  line-height: 1.4 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
-  transition: all 0.2s ease !important;
-}
-
-.dropdown-menu > li:last-child > a,
-.dropdown-menu > a:last-child {
-  border-bottom: none !important;
-}
-
-.dropdown-menu > li > a:hover,
-.dropdown-menu > a:hover {
-  background: rgba(179, 0, 27, 0.22) !important;
-  color: #ffffff !important;
-  padding-left: 26px !important;
-  border-left: 3px solid var(--banwell-red) !important;
-}
-
-/* ==========================================================================
-   3. TEAMS MEGA-MENU OVERRIDES (TARGETS SPECIFIC PLATFORM SELECTORS)
-   ========================================================================== */
-
+/* Teams Mega-Menu Full-Width Expansion */
 .dropdown-menu.mega-menu,
 .mega-dropdown-menu,
 .mega-menu,
+.dropdown.mega-dropdown .dropdown-menu,
 .dropdown-menu:has([class*="col-"]) {
   min-width: 100% !important;
+  width: 100% !important;
   padding: 24px 32px !important;
 }
 
-/* Fix Division / Column Titles (ADULTS, YOUTH, 1ST TEAM) */
-.mega-menu h2,
-.mega-menu h3,
-.mega-menu h4,
-.dropdown-menu [class*="col-"] h2,
-.dropdown-menu [class*="col-"] h3,
-.dropdown-menu [class*="col-"] h4,
-.dropdown-menu [class*="col-"] .title {
-  display: inline-block !important;
-  font-family: 'Bebas Neue', sans-serif !important;
-  color: var(--banwell-red) !important;
-  font-size: 22px !important;
-  letter-spacing: 1px !important;
-  margin: 0 4px 12px 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  text-transform: uppercase !important;
-  vertical-align: middle !important;
-}
-
-/* Inline Red Chevron Beside Section Headers */
-.mega-menu h4 + a,
-.mega-menu h3 + a,
-.dropdown-menu [class*="col-"] h3 + a,
-.dropdown-menu [class*="col-"] h4 + a,
-.dropdown-menu [class*="col-"] a[href*="/category/"],
-.dropdown-menu [class*="col-"] a[href*="/teams/adults"],
-.dropdown-menu [class*="col-"] a[href*="/teams/youth"] {
-  display: inline-block !important;
-  color: var(--banwell-red) !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
-  vertical-align: middle !important;
-  margin: 0 0 12px 0 !important;
-  padding: 0 0 0 2px !important;
-  border: none !important;
-  background: transparent !important;
-}
-
-/* Reset Lists and Containers */
+/* Reset default list styles and double borders */
+.dropdown-menu ul,
+.dropdown-menu ol,
+.dropdown-menu li,
 .mega-menu ul,
 .mega-menu li,
 .mega-menu .team-list-columns,
@@ -258,44 +189,140 @@ div[class*="report"]:has(a[href*="/match-report"]),
   background: transparent !important;
 }
 
-/* Clean Divider Lines on Team Items */
-.mega-menu .team-list-columns .team-menu-item,
-.dropdown-menu [class*="col-"] li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
+/* ==========================================================================
+   8. BULLETPROOF TEXT CONTRAST OVERRIDE (CRISP WHITE ON ALL LINKS)
+   ========================================================================== */
 
-/* SMOKING GUN OVERRIDE: Force Pure Crisp White on Team Links */
-.mega-menu .team-list-columns .team-menu-item a,
+/* Overpowers .club-colour, .nav-link, and Bootstrap 3 defaults */
+.dropdown-menu a,
+.dropdown-menu a:link,
+.dropdown-menu a:visited,
+.dropdown-menu li a,
+.dropdown-menu .dropdown-item,
+.dropdown-menu [class*="item"] a,
+.dropdown-menu [class*="col-"] a,
 .mega-menu a,
-.dropdown-menu [class*="col-"] a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]) {
+.mega-menu li a,
+.mega-dropdown-menu a,
+.navbar .dropdown-menu a,
+.navbar-nav .dropdown-menu a,
+.navbar-nav .dropdown-menu li a,
+.navbar-default .navbar-nav .open .dropdown-menu > li > a,
+.navbar-default .navbar-nav .open .dropdown-menu a {
   color: #ffffff !important;
   font-family: 'Montserrat', sans-serif !important;
-  font-size: 13px !important;
+  font-size: 13.5px !important;
   font-weight: 500 !important;
   display: block !important;
-  width: 100% !important;
-  padding: 6px 8px !important;
   line-height: 1.4 !important;
   text-decoration: none !important;
   border: none !important;
-  border-radius: 3px !important;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+  background: transparent !important;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
   opacity: 1 !important;
 }
 
-/* Team Link Hover State */
-.mega-menu .team-list-columns .team-menu-item a:hover,
-.dropdown-menu [class*="col-"] a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):hover {
-  background: rgba(179, 0, 27, 0.3) !important;
-  color: #ffffff !important;
-  padding-left: 12px !important;
-  border-left: 2px solid var(--banwell-red) !important;
-  transform: none !important;
+/* Standard Dropdown Link Padding */
+.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a,
+.navbar-nav > li:not(.mega-dropdown) .dropdown-menu a {
+  padding: 10px 22px !important;
 }
 
-/* 1st Team Thumbnail Image */
+/* Mega-Menu Team Item Padding */
+.mega-menu [class*="team"] a,
+.dropdown-menu [class*="col-"] a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]) {
+  padding: 6px 8px !important;
+  border-radius: 3px !important;
+}
+
+/* Force all inner text spans/tags to inherit crisp white */
+.dropdown-menu a *,
+.mega-menu a * {
+  color: inherit !important;
+}
+
+/* Accent for '>' font chevrons in Club Info */
+.dropdown-menu a i,
+.dropdown-menu a .fa,
+.dropdown-menu a .glyphicon {
+  color: var(--banwell-red) !important;
+  margin-right: 8px !important;
+}
+
+/* Strip border on final item */
+.dropdown-menu li:last-child > a,
+.dropdown-menu a:last-child {
+  border-bottom: none !important;
+}
+
+/* Unified Link Hover State (Silky Crimson Slide) */
+.dropdown-menu a:hover,
+.dropdown-menu a:focus,
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus,
+.navbar-nav .dropdown-menu a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+.mega-menu a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):hover {
+  background-color: rgba(179, 0, 27, 0.28) !important;
+  color: #ffffff !important;
+  padding-left: 26px !important;
+  border-left: 3px solid var(--banwell-red) !important;
+}
+
+/* Mega-menu specific hover indent */
+.mega-menu [class*="team"] a:hover,
+.dropdown-menu [class*="col-"] a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):hover {
+  padding-left: 12px !important;
+  border-left: 2px solid var(--banwell-red) !important;
+}
+
+/* ==========================================================================
+   9. TEAMS MEGA-MENU HEADERS & INLINE CHEVRONS
+   ========================================================================== */
+
+/* Division Titles (ADULTS, YOUTH, 1ST TEAM) */
+.mega-menu h2,
+.mega-menu h3,
+.mega-menu h4,
+.mega-menu .title,
+.dropdown-menu [class*="col-"] h2,
+.dropdown-menu [class*="col-"] h3,
+.dropdown-menu [class*="col-"] h4,
+.dropdown-menu [class*="col-"] .title {
+  display: inline-block !important;
+  font-family: 'Bebas Neue', sans-serif !important;
+  color: var(--banwell-red) !important;
+  font-size: 22px !important;
+  letter-spacing: 1px !important;
+  margin: 0 4px 12px 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-bottom: none !important;
+  text-transform: uppercase !important;
+  vertical-align: middle !important;
+}
+
+/* Category '>' Chevrons Inline */
+.mega-menu a[href*="/category/"],
+.mega-menu a[href*="/teams/adults"],
+.mega-menu a[href*="/teams/youth"],
+.dropdown-menu [class*="col-"] a[href*="/category/"],
+.dropdown-menu [class*="col-"] a[href*="/teams/adults"],
+.dropdown-menu [class*="col-"] a[href*="/teams/youth"] {
+  display: inline-block !important;
+  color: var(--banwell-red) !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  vertical-align: middle !important;
+  margin: 0 0 12px 0 !important;
+  padding: 0 0 0 2px !important;
+  border: none !important;
+  border-bottom: none !important;
+  background: transparent !important;
+}
+
+/* 1st Team Photo */
 .mega-menu img,
 .dropdown-menu img {
   border-radius: 6px !important;
