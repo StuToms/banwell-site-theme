@@ -3,10 +3,11 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.0.0
+   Version:     2.1.0
    Date:        13 September 2026
-   Build Notes: Clean navigation baseline (borderless team rows, hidden
-                broken glyphs, pure white contrast, 0.35s glide, full z-index)
+   Build Notes: Restored Adults & Youth Bebas headers; completely eradicated
+                all pseudo-elements and icon glyphs (> and square boxes) across
+                all menus; borderless list rows with crisp contrast.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -70,7 +71,7 @@ h1, h2, h3, h4, h5, h6,
   width: auto !important;
 }
 
-/* --- 3. MAIN NAVIGATION BAR (HEADER ROW) --- */
+/* --- 3. MAIN NAVIGATION BAR (HEADER ROW & STACKING CONTEXT) --- */
 header,
 #header,
 .header,
@@ -89,7 +90,7 @@ header,
   border-color: var(--banwell-red) !important;
 }
 
-/* Strip panel styling accidentally inherited by navbar <li> items */
+/* Reset All Navbar List Items */
 .navbar-nav > li,
 .navbar-nav > li.mega-menu,
 .navbar-nav > li.dropdown,
@@ -206,7 +207,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   padding: 8px 0 !important;
 }
 
-/* Standard Dropdown Sizing (Club Info, Contact) */
+/* Standard Dropdowns Sizing (Club Info, Contact) */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) > .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
@@ -214,7 +215,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   right: auto !important;
 }
 
-/* Teams Mega-Menu Panel: Full Screen Expansion */
+/* Teams Mega-Menu Panel Full-Width */
 .navbar-nav > li.mega-menu > .dropdown-menu,
 .navbar-nav > li.mega-dropdown > .dropdown-menu,
 .dropdown-menu.mega-menu,
@@ -228,7 +229,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   box-sizing: border-box !important;
 }
 
-/* Reset Lists & Spacing inside Dropdowns */
+/* Reset Lists & Containers */
 .dropdown-menu ul,
 .dropdown-menu ol,
 .dropdown-menu li,
@@ -242,45 +243,69 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   8. TEXT CONTRAST & HYGIENE (CRISP WHITE ON ALL DROPDOWN LINKS)
+   8. ERADICATE ALL GLYPHS, CHEVRONS & BROKEN SQUARE ICONS
    ========================================================================== */
 
-/* Force Crisp White & Override .club-colour */
-.dropdown-menu a,
-.dropdown-menu li a,
-.dropdown-menu span,
-.dropdown-menu .club-colour,
-.dropdown-menu .team-menu-item a,
-.dropdown-menu [class*="col-"] a {
+/* 1. Neutralize all framework pseudo-elements generating '>' or chevrons */
+.dropdown-menu *::before,
+.dropdown-menu *::after,
+.dropdown-menu a::before,
+.dropdown-menu a::after,
+.dropdown-menu li::before,
+.dropdown-menu li::after,
+.dropdown-menu > li > a::before,
+.dropdown-menu > li > a::after {
+  content: "" !important;
+  content: none !important;
+  display: none !important;
+}
+
+/* 2. Remove all icon tags, font-icons and helper chevrons */
+.dropdown-menu i,
+.dropdown-menu svg,
+.dropdown-menu [class*="fa"],
+.dropdown-menu [class*="glyph"],
+.dropdown-menu [class*="chevron"],
+.dropdown-menu [class*="arrow"],
+.dropdown-menu [class*="angle"] {
+  display: none !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  font-size: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 3. Hide redundant standalone category chevron links beside headers */
+.dropdown-menu [class*="col-"] h2 + a,
+.dropdown-menu [class*="col-"] h3 + a,
+.dropdown-menu [class*="col-"] h4 + a,
+.dropdown-menu [class*="col-"] .title + a {
+  display: none !important;
+}
+
+/* ==========================================================================
+   9. HIGH-CONTRAST TEXT STYLING FOR STANDARD DROPDOWNS (CLUB INFO, CONTACT)
+   ========================================================================== */
+
+.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a,
+.navbar-nav > li:not(.mega-dropdown):not(.mega-menu) .dropdown-menu a {
   color: #ffffff !important;
   font-family: 'Montserrat', sans-serif !important;
   font-size: 13.5px !important;
   font-weight: 500 !important;
-  opacity: 1 !important;
-  text-decoration: none !important;
-}
-
-/* Hide Redundant Glyphs: Removes default ">" chevrons and missing-font boxes */
-.dropdown-menu a i,
-.dropdown-menu a .fa,
-.dropdown-menu a[href*="/category/"],
-.dropdown-menu a[href*="/teams/adults"],
-.dropdown-menu a[href*="/teams/youth"] {
-  display: none !important;
-}
-
-/* Standard Dropdown Rows (Club Info, Contact) */
-.navbar-nav > li:not(.mega-dropdown):not(.mega-menu) .dropdown-menu > li > a,
-.navbar-nav > li:not(.mega-dropdown):not(.mega-menu) .dropdown-menu > a {
   display: block !important;
   padding: 10px 22px !important;
   line-height: 1.4 !important;
+  border: none !important;
   border-bottom: none !important;
   background: transparent !important;
+  text-decoration: none !important;
   transition: all 0.18s ease-in-out !important;
 }
 
-/* Hover State on Standard Dropdown Links */
+.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a:hover,
 .navbar-nav > li:not(.mega-dropdown):not(.mega-menu) .dropdown-menu a:hover {
   background: rgba(179, 0, 27, 0.22) !important;
   color: #ffffff !important;
@@ -289,44 +314,60 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   9. TEAMS MEGA-MENU HEADERS & SQUADS
+   10. TEAMS MEGA-MENU: RESTORED HEADERS & SQUAD LISTS
    ========================================================================== */
 
-/* Section Titles (ADULTS, YOUTH, 1ST TEAM) */
+/* Restored Crimson Headings: BANWELL FC 1ST TEAM, ADULTS, YOUTH */
 .dropdown-menu [class*="col-"] h2,
 .dropdown-menu [class*="col-"] h3,
 .dropdown-menu [class*="col-"] h4,
-.dropdown-menu [class*="col-"] .title {
+.dropdown-menu [class*="col-"] .title,
+.dropdown-menu [class*="col-"] h2 a,
+.dropdown-menu [class*="col-"] h3 a,
+.dropdown-menu [class*="col-"] h4 a,
+.dropdown-menu [class*="col-"] .title a,
+.dropdown-menu [class*="col-"] a[href*="/teams/adults"],
+.dropdown-menu [class*="col-"] a[href*="/teams/youth"] {
   display: inline-block !important;
   font-family: 'Bebas Neue', sans-serif !important;
   color: var(--banwell-red) !important;
   font-size: 22px !important;
   letter-spacing: 1px !important;
+  text-transform: uppercase !important;
   margin: 0 0 16px 0 !important;
   padding: 0 !important;
   border: none !important;
-  text-transform: uppercase !important;
+  text-decoration: none !important;
+  line-height: 1.1 !important;
   vertical-align: middle !important;
 }
 
-/* Team Links in Columns */
+/* Individual Team Squad Rows (White Text, Borderless) */
 .dropdown-menu .team-menu-item,
 .dropdown-menu [class*="col-"] li {
+  border: none !important;
   border-bottom: none !important;
   margin: 0 0 4px 0 !important;
   padding: 0 !important;
 }
 
-.dropdown-menu [class*="col-"] a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]),
+.dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not(.title),
 .dropdown-menu .team-menu-item a {
+  color: #ffffff !important;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
   display: block !important;
   padding: 6px 8px !important;
+  border: none !important;
+  border-bottom: none !important;
   border-radius: 3px !important;
+  text-decoration: none !important;
   transition: all 0.18s ease !important;
 }
 
 /* Team Link Hover State */
-.dropdown-menu [class*="col-"] a:not([href*="/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):hover,
+.dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not(.title):hover,
 .dropdown-menu .team-menu-item a:hover {
   background: rgba(179, 0, 27, 0.28) !important;
   color: #ffffff !important;
