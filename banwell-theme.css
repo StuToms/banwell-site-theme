@@ -1,7 +1,12 @@
 /* ==========================================================================
    BANWELL FOOTBALL CLUB - MASTER THEME STYLESHEET
-   Platform: MyClubPro V3
-   Repository: banwell-site-theme
+   Platform:    MyClubPro V3
+   Repository:  banwell-site-theme
+   File:        banwell-theme.css
+   Version:     2.0.0
+   Date:        13 September 2026
+   Build Notes: Clean navigation baseline (borderless team rows, hidden
+                broken glyphs, pure white contrast, 0.35s glide, full z-index)
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -84,7 +89,7 @@ header,
   border-color: var(--banwell-red) !important;
 }
 
-/* Strip any panel styling accidentally inherited by navbar <li> elements */
+/* Strip panel styling accidentally inherited by navbar <li> items */
 .navbar-nav > li,
 .navbar-nav > li.mega-menu,
 .navbar-nav > li.dropdown,
@@ -209,7 +214,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   right: auto !important;
 }
 
-/* Teams Mega-Menu Panel: Expands to full screen width */
+/* Teams Mega-Menu Panel: Full Screen Expansion */
 .navbar-nav > li.mega-menu > .dropdown-menu,
 .navbar-nav > li.mega-dropdown > .dropdown-menu,
 .dropdown-menu.mega-menu,
@@ -223,7 +228,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   box-sizing: border-box !important;
 }
 
-/* Reset Lists & Spacing inside Dropdown Containers */
+/* Reset Lists & Spacing inside Dropdowns */
 .dropdown-menu ul,
 .dropdown-menu ol,
 .dropdown-menu li,
@@ -237,7 +242,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   8. TEXT CONTRAST, CLEANUP & REMOVING CLUTTER
+   8. TEXT CONTRAST & HYGIENE (CRISP WHITE ON ALL DROPDOWN LINKS)
    ========================================================================== */
 
 /* Force Crisp White & Override .club-colour */
@@ -255,7 +260,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   text-decoration: none !important;
 }
 
-/* HIDE REDUNDANT ICONS: Removes default ">" chevrons and broken font squares */
+/* Hide Redundant Glyphs: Removes default ">" chevrons and missing-font boxes */
 .dropdown-menu a i,
 .dropdown-menu a .fa,
 .dropdown-menu a[href*="/category/"],
@@ -270,7 +275,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   display: block !important;
   padding: 10px 22px !important;
   line-height: 1.4 !important;
-  border-bottom: none !important; /* REMOVED LINES */
+  border-bottom: none !important;
   background: transparent !important;
   transition: all 0.18s ease-in-out !important;
 }
@@ -307,7 +312,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 /* Team Links in Columns */
 .dropdown-menu .team-menu-item,
 .dropdown-menu [class*="col-"] li {
-  border-bottom: none !important; /* REMOVED LINES */
+  border-bottom: none !important;
   margin: 0 0 4px 0 !important;
   padding: 0 !important;
 }
