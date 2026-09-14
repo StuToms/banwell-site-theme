@@ -3,13 +3,12 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.8.0
+   Version:     2.9.0
    Date:        14 September 2026
-   Build Notes: Full production release. Unified crimson category headers;
-                click-to-dismiss mutual exclusion (.bfc-closed);
-                impermeable z-index stacking context; luxury 0.42s View Transitions;
-                0.34s bidirectional smooth dropdowns; mobile accreditation pinning;
-                elevated sponsor showcase cards.
+   Build Notes: Overhauled sponsor showcase cards (neutralized Bootstrap .ratio,
+                scaled logos 1.15x, eradicated broken inner footer border);
+                unified crimson category headers; click-to-dismiss mutual exclusion;
+                impermeable z-index header; luxury 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -436,48 +435,90 @@ div[class*="report"]:has(a[href*="/match-report"]),
    8. ELEVATED TEAM PAGE SPONSORS (PROMINENT COMMERCIAL SHOWCASE)
    ========================================================================== */
 
+/* Outer Sponsor Card Container */
 .col-lg-3 .card:has(img),
 .col-lg-3 .panel:has(img),
 .col-lg-3 div[class*="sponsor"],
 aside [class*="sponsor"] {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
-  border-top: 3px solid var(--banwell-red) !important;
+  border-top: 4px solid var(--banwell-red) !important;
   border-radius: 8px !important;
-  padding: 16px 14px !important;
-  margin-bottom: 20px !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden !important;
+  padding: 0 !important; /* Removes broken outer padding around card-footer */
+  margin-bottom: 24px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06) !important;
   text-align: center !important;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease !important;
 }
 
 .col-lg-3 .card:has(img):hover,
 .col-lg-3 div[class*="sponsor"]:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1) !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12) !important;
 }
 
-.col-lg-3 .card img,
-.col-lg-3 div[class*="sponsor"] img {
-  max-height: 110px !important;
+/* Inner Body Container */
+.col-lg-3 .card:has(img) .card-body {
+  padding: 24px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 130px !important;
+  background: #ffffff !important;
+}
+
+/* Neutralize Bootstrap .ratio constraints that crush the logo */
+.col-lg-3 .card:has(img) .ratio {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 110px !important;
+  min-height: 110px !important;
+  width: 100% !important;
+  padding-top: 0 !important;
+}
+
+.col-lg-3 .card:has(img) .ratio::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* Prominent, Scaled Sponsor Logo */
+.col-lg-3 .card:has(img) .ratio img,
+.col-lg-3 .card:has(img) img {
+  position: static !important;
+  max-height: 100px !important;
   max-width: 90% !important;
   width: auto !important;
   height: auto !important;
   object-fit: contain !important;
-  margin: 0 auto 10px auto !important;
+  transform: scale(1.15) !important;
+  margin: 0 auto !important;
   display: block !important;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08)) !important;
 }
 
-.col-lg-3 .card h5,
-.col-lg-3 .card span,
-.col-lg-3 div[class*="sponsor"] span,
-.col-lg-3 div[class*="sponsor"] p {
+/* Premium Dark Banner Card Footer */
+.col-lg-3 .card:has(img) .card-footer {
+  background: var(--banwell-charcoal) !important;
+  border-top: none !important;
+  padding: 10px 14px !important;
+  margin: 0 !important;
+  border-radius: 0 0 7px 7px !important;
+}
+
+.col-lg-3 .card:has(img) .card-footer h2,
+.col-lg-3 .card:has(img) .card-footer .h5,
+.col-lg-3 .card:has(img) .card-footer p,
+.col-lg-3 .card:has(img) .card-footer span {
   font-family: 'Bebas Neue', sans-serif !important;
-  font-size: 15px !important;
-  letter-spacing: 1px !important;
-  color: var(--banwell-red) !important;
-  margin: 4px 0 0 0 !important;
+  font-size: 17px !important;
+  letter-spacing: 1.5px !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.2 !important;
   text-transform: uppercase !important;
 }
 
@@ -555,7 +596,7 @@ aside [class*="sponsor"] {
   .col-lg-3 .card:has(img),
   .col-lg-3 div[class*="sponsor"] {
     margin-bottom: 0 !important;
-    padding: 10px 8px !important;
+    padding: 0 !important;
   }
 
   .col-lg-3 .card img,
