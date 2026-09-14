@@ -3,9 +3,10 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.1
+   Version:     2.9.2
    Date:        14 September 2026
-   Build Notes: Stripped logo box-shadow/filter; normalized card proportions;
+   Build Notes: Maximized sponsor logo sizing (boosted height to 105px, added
+                scale(1.28) to eliminate built-in image whitespace padding);
                 clean charcoal sponsor footers; unified crimson category headers;
                 click-to-dismiss mutual exclusion; impermeable z-index header;
                 luxury 0.42s View Transitions; mobile accreditation pinning.
@@ -51,8 +52,14 @@
 }
 
 @keyframes bfcFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Base Canvas Grounding */
@@ -426,7 +433,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   8. CLEAN COMMERCIAL SPONSOR SHOWCASE (NO DROP SHADOWS OR BOX CONSTRAINTS)
+   8. CLEAN COMMERCIAL SPONSOR SHOWCASE (MAXIMIZED VISIBILITY)
    ========================================================================== */
 
 /* Outer Sponsor Card Container */
@@ -452,42 +459,48 @@ aside [class*="sponsor"] {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Inner Body Container */
-.col-lg-3 .card:has(img) .card-body {
-  padding: 16px 14px !important;
+/* Inner Body Container: tight padding, dedicated vertical space */
+.col-lg-3 .card:has(img) .card-body,
+.col-lg-3 .card .card-body:has(img) {
+  padding: 14px 10px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 85px !important;
+  min-height: 125px !important;
+  height: 125px !important;
   background: #ffffff !important;
+  overflow: hidden !important;
 }
 
 /* Neutralize Bootstrap .ratio constraints */
-.col-lg-3 .card:has(img) .ratio {
+.col-lg-3 .card:has(img) .ratio,
+.col-lg-3 .ratio-contain {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: auto !important;
-  min-height: unset !important;
+  height: 100% !important;
   width: 100% !important;
   padding-top: 0 !important;
+  position: relative !important;
 }
 
-.col-lg-3 .card:has(img) .ratio::before {
+.col-lg-3 .card:has(img) .ratio::before,
+.col-lg-3 .ratio::before {
   display: none !important;
   content: none !important;
 }
 
-/* Natural Logo Presentation (Zero Shadows, Unconstrained Scaling) */
+/* Maximize Sponsor Logo Presentation */
 .col-lg-3 .card:has(img) .ratio img,
 .col-lg-3 .card:has(img) img {
   position: static !important;
-  max-height: 75px !important;
-  max-width: 90% !important;
+  max-height: 105px !important;
+  height: 100px !important;
+  max-width: 95% !important;
   width: auto !important;
-  height: auto !important;
   object-fit: contain !important;
-  transform: none !important;
+  transform: scale(1.28) !important; /* Boldly scales up logos with built-in empty canvas padding */
+  transform-origin: center center !important;
   margin: 0 auto !important;
   display: block !important;
   filter: none !important;
@@ -597,6 +610,8 @@ aside [class*="sponsor"] {
 
   .col-lg-3 .card img,
   .col-lg-3 div[class*="sponsor"] img {
-    max-height: 60px !important;
+    max-height: 70px !important;
+    height: 65px !important;
+    transform: scale(1.15) !important;
   }
 }
