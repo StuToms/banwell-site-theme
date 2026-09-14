@@ -3,12 +3,11 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.6.0
+   Version:     2.7.0
    Date:        14 September 2026
-   Build Notes: Integrated click-to-collapse override (.bfc-closed);
-                desktop hover with click dismissal support;
-                mobile header England Football badge pinning;
-                0.42s View Transitions & 0.34s smooth bidirectional menus.
+   Build Notes: Eradicated double-menu overlap bug (stripped .dropdown-menu.show);
+                mutual exclusion hover & click-to-collapse support;
+                luxury 0.42s View Transitions & 0.34s smooth bidirectional menus.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -240,7 +239,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   7. BIDIRECTIONAL DROPDOWNS & CLICK-TO-DISMISS CONTROLS
+   7. BIDIRECTIONAL DROPDOWNS & MUTUAL EXCLUSION HOVER CONTROLS
    ========================================================================== */
 
 .dropdown-menu {
@@ -267,12 +266,9 @@ div[class*="report"]:has(a[href*="/match-report"]),
   isolation: isolate !important;
 }
 
-/* Universal Hover State */
-.dropdown-menu.show,
-.navbar-nav .dropdown:hover .dropdown-menu,
-.navbar-nav > li:hover .dropdown-menu,
-.navbar-nav > li.mega-menu:hover .dropdown-menu,
-.navbar-nav > li.open .dropdown-menu {
+/* Active Hover State: Only displays when NOT closed */
+.navbar-nav > li:not(.bfc-closed):hover > .dropdown-menu,
+.navbar-nav > li.mega-menu:not(.bfc-closed):hover .dropdown-menu {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translate3d(0, 0, 0) !important;
@@ -281,14 +277,13 @@ div[class*="report"]:has(a[href*="/match-report"]),
 
 /* Click-to-Dismiss State Override */
 .navbar-nav > li.bfc-closed .dropdown-menu,
+.navbar-nav > li.bfc-closed:hover .dropdown-menu,
 .navbar-nav .dropdown.bfc-closed .dropdown-menu {
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
   transform: translate3d(0, -10px, 0) !important;
-  transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-              visibility 0.25s !important;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s !important;
 }
 
 /* Single-Column Dropdowns Sizing (Club Info, Contact) */
