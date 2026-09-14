@@ -3,11 +3,11 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.4.0
+   Version:     2.5.0
    Date:        14 September 2026
-   Build Notes: Impermeable header stacking context (stops button bleed-through);
-                restored homepage hero photo (rescued from z-index -1);
-                slower, luxury 0.42s cross-page transitions & 0.34s smooth menus.
+   Build Notes: Fixed Teams hover (targeted wrapper div); enabled mobile
+                England Football 2-Star accreditation badge beside centered crest;
+                luxury 0.42s View Transitions & 0.34s smooth bidirectional menus.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -83,7 +83,7 @@ section .home-hero-image {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover !important;
-  z-index: 1 !important; /* Rescued from z-index: -1 */
+  z-index: 1 !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
@@ -104,7 +104,7 @@ header,
 .header,
 .main-header {
   position: relative !important;
-  z-index: 9999999 !important; /* Prevents buttons & cards from piercing through */
+  z-index: 9999999 !important;
   background-color: var(--banwell-black) !important;
   border: none !important;
   border-bottom: none !important;
@@ -239,13 +239,13 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   7. BIDIRECTIONAL DROPDOWNS (0.34s DECELERATION GLIDE)
+   7. BIDIRECTIONAL DROPDOWNS & MEGA-MENU HOVER OVERRIDES
    ========================================================================== */
 
 .dropdown-menu {
   position: absolute !important;
   top: 100% !important;
-  z-index: 10000000 !important; /* Renders above all page content */
+  z-index: 10000000 !important;
   background: var(--banwell-charcoal) !important;
   background-color: var(--banwell-charcoal) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -266,11 +266,12 @@ div[class*="report"]:has(a[href*="/match-report"]),
   isolation: isolate !important;
 }
 
-/* Active / Open Dropdown State */
+/* Universal Hover State: Triggers Teams (inside wrapper div) & Standard Dropdowns */
 .dropdown-menu.show,
-.navbar-nav .dropdown:hover > .dropdown-menu,
-.navbar-nav > li:hover > .dropdown-menu,
-.navbar-nav > li.open > .dropdown-menu {
+.navbar-nav .dropdown:hover .dropdown-menu,
+.navbar-nav > li:hover .dropdown-menu,
+.navbar-nav > li.mega-menu:hover .dropdown-menu,
+.navbar-nav > li.open .dropdown-menu {
   opacity: 1 !important;
   visibility: visible !important;
   transform: translate3d(0, 0, 0) !important;
@@ -278,7 +279,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* Single-Column Dropdowns Sizing (Club Info, Contact) */
-.navbar-nav > li:not(.mega-menu):not(.mega-dropdown) > .dropdown-menu {
+.navbar-nav > li:not(.mega-menu):not(.mega-dropdown) .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
   left: 0 !important;
@@ -286,8 +287,8 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* Teams Mega-Menu Panel Full-Width Expansion */
-.navbar-nav > li.mega-menu > .dropdown-menu,
-.navbar-nav > li.mega-dropdown > .dropdown-menu,
+.navbar-nav > li.mega-menu .dropdown-menu,
+.navbar-nav > li.mega-dropdown .dropdown-menu,
 .dropdown-menu.mega-menu,
 .dropdown-menu.mega-dropdown-menu {
   left: 0 !important;
@@ -452,9 +453,10 @@ aside [class*="sponsor"] {
 }
 
 /* ==========================================================================
-   9. CROSS-DEVICE RESPONSIVE HARDENING (MOBILE, TABLET, DESKTOP)
+   9. CROSS-DEVICE RESPONSIVE HARDENING & MOBILE HEADER ENHANCEMENT
    ========================================================================== */
 
+/* Tablet Breakpoints (768px – 1199.98px) */
 @media (max-width: 1199.98px) {
   #team-name {
     font-size: 26px !important;
@@ -474,23 +476,47 @@ aside [class*="sponsor"] {
   }
 }
 
+/* Mobile Handhelds (< 768px) */
 @media (max-width: 767.98px) {
   body {
     padding: 0 !important;
   }
 
   .header-top {
-    padding: 8px 12px !important;
+    padding: 10px 14px !important;
   }
 
-  #team-name {
-    font-size: 22px !important;
+  /* Centered Banwell FC Crest */
+  .header-top .container > .d-flex {
+    position: relative !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .header-top #badge {
+    margin: 0 auto !important;
+  }
+
+  /* Show England Football 2-Star Badge Pinned to Right on Mobile */
+  .header-top .header-logos {
+    display: flex !important; /* Overrides MyClubPro's d-none on mobile */
+    position: absolute !important;
+    right: 6px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
   }
 
   .charter-standard img {
-    height: 42px !important;
+    height: 38px !important;
+    width: auto !important;
   }
 
+  #team-name {
+    display: none !important;
+  }
+
+  /* 2-Column Sponsor Grid on Mobile */
   .col-lg-3 {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
