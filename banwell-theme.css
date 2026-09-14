@@ -3,11 +3,11 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.2.0
+   Version:     2.3.0
    Date:        14 September 2026
-   Build Notes: Eradicated header divider line; added smooth page transitions;
-                elevated team sponsor showcases; enforced cross-device responsive
-                hardening (mobile, tablet, desktop).
+   Build Notes: Native cross-document View Transitions (zero-flash page crossfades);
+                bidirectional smooth dropdown fade/glide (in and out);
+                grounded canvas background; elevated team sponsor showcases.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -25,24 +25,38 @@
   --banwell-page-bg: #f4f6fa;
 }
 
-/* --- 2. GLOBAL APP-LIKE PAGE TRANSITION --- */
-@keyframes bfcPageEntrance {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, 6px, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+/* --- 2. ZERO-FLASH CANVAS & CROSS-PAGE VIEW TRANSITIONS --- */
+@view-transition {
+  navigation: auto; /* Native Chrome/Edge cross-document page transitions */
+}
+
+::view-transition-old(root) {
+  animation: 0.22s cubic-bezier(0.4, 0, 1, 1) both bfcFadeOut;
+}
+
+::view-transition-new(root) {
+  animation: 0.26s cubic-bezier(0, 0, 0.2, 1) both bfcFadeIn;
+}
+
+@keyframes bfcFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.996); }
+}
+
+@keyframes bfcFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Base Canvas Grounding (Prevents white background flashes between page unloads) */
+html {
+  background-color: var(--banwell-charcoal) !important;
 }
 
 body {
   font-family: 'Montserrat', sans-serif !important;
   color: var(--banwell-text);
   background-color: var(--banwell-page-bg) !important;
-  animation: bfcPageEntrance 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform, opacity;
   overflow-x: hidden;
 }
 
@@ -58,14 +72,14 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HEADER TOP & ERADICATED SEPARATOR LINE --- */
+/* --- 3. HEADER TOP & SEAMLESS NAVIGATION BAR --- */
 .header-top,
 header,
 #header,
 .main-header {
   background-color: var(--banwell-black) !important;
   border: none !important;
-  border-bottom: none !important; /* KILLS THE HEADER-MENU SEPARATOR LINE */
+  border-bottom: none !important;
   box-shadow: none !important;
   padding: 12px 0 !important;
 }
@@ -93,7 +107,7 @@ header,
   width: auto !important;
 }
 
-/* --- 4. MAIN NAVIGATION BAR --- */
+/* Main Navigation Bar Container */
 .club-colour-bg,
 .navbar,
 .navbar-default,
@@ -101,7 +115,7 @@ header,
   position: relative !important;
   z-index: 99999 !important;
   background-color: var(--banwell-black) !important;
-  border-top: none !important; /* ENSURES SEAMLESS TRANSITION FROM HEADER */
+  border-top: none !important;
   border-bottom: 2px solid var(--banwell-red) !important;
 }
 
@@ -146,7 +160,7 @@ header,
   background: transparent !important;
 }
 
-/* --- 5. SUB-PAGE TABS & BUTTONS --- */
+/* --- 4. SUB-PAGE TABS & BUTTONS --- */
 .nav:not(.navbar-nav) .nav-link {
   font-size: 19px !important;
   color: #334155 !important;
@@ -181,7 +195,7 @@ header,
   color: #ffffff !important;
 }
 
-/* --- 6. HOMEPAGE: HIDE RECENT MATCH REPORTS --- */
+/* --- 5. HOMEPAGE: HIDE RECENT MATCH REPORTS --- */
 [class*="col-"]:has(a[href*="/match-report"]),
 div[class*="report"]:has(a[href*="/match-report"]),
 .card:has(a[href*="/match-report"]),
@@ -190,19 +204,8 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   7. NAVIGATION: BUTTERY SMOOTH DROPDOWNS & MEGA-MENU PANELS
+   6. BIDIRECTIONAL SMOOTH MENUS (FADES AND GLIDES IN AND OUT)
    ========================================================================== */
-
-@keyframes bfcSmoothGlide {
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -10px, 0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
 
 .dropdown-menu {
   position: absolute !important;
@@ -213,11 +216,31 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 0 0 6px 6px !important;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9) !important;
-  animation: bfcSmoothGlide 0.35s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
-  will-change: transform, opacity !important;
   padding: 8px 0 !important;
+
+  /* Bidirectional Transition */
+  display: block !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translate3d(0, -8px, 0) !important;
+  transition: opacity 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
+              visibility 0.22s !important;
+  pointer-events: none !important;
 }
 
+/* Active / Open Dropdown State (Hover & Click Supported) */
+.dropdown-menu.show,
+.navbar-nav .dropdown:hover > .dropdown-menu,
+.navbar-nav > li:hover > .dropdown-menu,
+.navbar-nav > li.open > .dropdown-menu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) !important;
+  pointer-events: auto !important;
+}
+
+/* Standard Dropdown Sizing (Club Info, Contact) */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) > .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
@@ -225,6 +248,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   right: auto !important;
 }
 
+/* Teams Mega-Menu Panel Full-Width Expansion */
 .navbar-nav > li.mega-menu > .dropdown-menu,
 .navbar-nav > li.mega-dropdown > .dropdown-menu,
 .dropdown-menu.mega-menu,
@@ -238,7 +262,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   box-sizing: border-box !important;
 }
 
-/* Reset Dropdown Lists */
+/* Reset Lists inside Menus */
 .dropdown-menu ul,
 .dropdown-menu ol,
 .dropdown-menu li,
@@ -251,7 +275,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   background: transparent !important;
 }
 
-/* Eradicate All Framework Icon Squares and > Symbols */
+/* Eradicate Icon Squares & Chevrons */
 .dropdown-menu *::before,
 .dropdown-menu *::after,
 .dropdown-menu i,
@@ -297,13 +321,14 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-left: 3px solid var(--banwell-red) !important;
 }
 
-/* Teams Mega-Menu Section Headers */
+/* Teams Mega-Menu Headers */
 .dropdown-menu [class*="col-"] h2,
 .dropdown-menu [class*="col-"] h3,
 .dropdown-menu [class*="col-"] h4,
 .dropdown-menu [class*="col-"] .title,
 .dropdown-menu [class*="col-"] a[href*="/teams/adults"],
-.dropdown-menu [class*="col-"] a[href*="/teams/youth"] {
+.dropdown-menu [class*="col-"] a[href*="/teams/youth"],
+.dropdown-menu [class*="col-"] a[href*="/team/category/girls"] {
   display: inline-block !important;
   font-family: 'Bebas Neue', sans-serif !important;
   color: var(--banwell-red) !important;
@@ -340,10 +365,9 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   8. ELEVATED TEAM PAGE SPONSORS (PROMINENT COMMERCIAL SHOWCASE)
+   7. ELEVATED TEAM PAGE SPONSORS (PROMINENT COMMERCIAL SHOWCASE)
    ========================================================================== */
 
-/* Target sponsor sidebar cards across team pages */
 .col-lg-3 .card:has(img),
 .col-lg-3 .panel:has(img),
 .col-lg-3 div[class*="sponsor"],
@@ -365,7 +389,6 @@ aside [class*="sponsor"] {
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Enlarged, High-Definition Sponsor Logos */
 .col-lg-3 .card img,
 .col-lg-3 div[class*="sponsor"] img {
   max-height: 110px !important;
@@ -378,7 +401,6 @@ aside [class*="sponsor"] {
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
 }
 
-/* "KIT SPONSOR" Label Styling */
 .col-lg-3 .card h5,
 .col-lg-3 .card span,
 .col-lg-3 div[class*="sponsor"] span,
@@ -392,10 +414,9 @@ aside [class*="sponsor"] {
 }
 
 /* ==========================================================================
-   9. CROSS-DEVICE RESPONSIVE HARDENING (MOBILE, TABLET, DESKTOP)
+   8. CROSS-DEVICE RESPONSIVE HARDENING (MOBILE, TABLET, DESKTOP)
    ========================================================================== */
 
-/* Tablet & Mobile Breakpoints (< 1200px) */
 @media (max-width: 1199.98px) {
   #team-name {
     font-size: 26px !important;
@@ -405,19 +426,16 @@ aside [class*="sponsor"] {
     height: 50px !important;
   }
 
-  /* Prevent sidebars from clipping on tablets */
   .col-lg-3 {
     margin-top: 24px !important;
   }
   
-  /* Make embedded maps fluid and touch-friendly */
   iframe[src*="google.com/maps"] {
     width: 100% !important;
     max-height: 340px !important;
   }
 }
 
-/* Mobile Handhelds (< 768px) */
 @media (max-width: 767.98px) {
   body {
     padding: 0 !important;
@@ -435,7 +453,6 @@ aside [class*="sponsor"] {
     height: 42px !important;
   }
 
-  /* Sponsors display in a clean 2-column grid on mobile */
   .col-lg-3 {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
