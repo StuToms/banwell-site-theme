@@ -3,11 +3,11 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.1.0
-   Date:        13 September 2026
-   Build Notes: Restored Adults & Youth Bebas headers; completely eradicated
-                all pseudo-elements and icon glyphs (> and square boxes) across
-                all menus; borderless list rows with crisp contrast.
+   Version:     2.2.0
+   Date:        14 September 2026
+   Build Notes: Eradicated header divider line; added smooth page transitions;
+                elevated team sponsor showcases; enforced cross-device responsive
+                hardening (mobile, tablet, desktop).
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -19,14 +19,31 @@
   --banwell-black: #000000;
   --banwell-charcoal: #0e1117;
   --banwell-border: #1a1a1a;
-  --banwell-text: #222222;
-  --banwell-muted: #888888;
+  --banwell-text: #1e293b;
+  --banwell-muted: #64748b;
+  --banwell-card-bg: #ffffff;
+  --banwell-page-bg: #f4f6fa;
 }
 
-/* Base Body Typography */
+/* --- 2. GLOBAL APP-LIKE PAGE TRANSITION --- */
+@keyframes bfcPageEntrance {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 body {
   font-family: 'Montserrat', sans-serif !important;
   color: var(--banwell-text);
+  background-color: var(--banwell-page-bg) !important;
+  animation: bfcPageEntrance 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  overflow-x: hidden;
 }
 
 /* Headings & Display Elements (Bebas Neue) */
@@ -41,10 +58,15 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 2. HEADER TOP & BRANDING BAR --- */
-.header-top {
+/* --- 3. HEADER TOP & ERADICATED SEPARATOR LINE --- */
+.header-top,
+header,
+#header,
+.main-header {
   background-color: var(--banwell-black) !important;
-  border-bottom: 1px solid var(--banwell-border) !important;
+  border: none !important;
+  border-bottom: none !important; /* KILLS THE HEADER-MENU SEPARATOR LINE */
+  box-shadow: none !important;
   padding: 12px 0 !important;
 }
 
@@ -71,11 +93,7 @@ h1, h2, h3, h4, h5, h6,
   width: auto !important;
 }
 
-/* --- 3. MAIN NAVIGATION BAR (HEADER ROW & STACKING CONTEXT) --- */
-header,
-#header,
-.header,
-.main-header,
+/* --- 4. MAIN NAVIGATION BAR --- */
 .club-colour-bg,
 .navbar,
 .navbar-default,
@@ -83,14 +101,11 @@ header,
   position: relative !important;
   z-index: 99999 !important;
   background-color: var(--banwell-black) !important;
+  border-top: none !important; /* ENSURES SEAMLESS TRANSITION FROM HEADER */
+  border-bottom: 2px solid var(--banwell-red) !important;
 }
 
-.club-colour-border-top,
-.club-colour-border-bottom {
-  border-color: var(--banwell-red) !important;
-}
-
-/* Reset All Navbar List Items */
+/* Reset Navbar List Items */
 .navbar-nav > li,
 .navbar-nav > li.mega-menu,
 .navbar-nav > li.dropdown,
@@ -100,8 +115,6 @@ header,
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  animation: none !important;
-  transform: none !important;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -115,7 +128,6 @@ header,
   position: relative !important;
 }
 
-/* Top Navbar Links */
 .navbar-nav > li > a,
 .navbar-nav .nav-link {
   font-family: 'Bebas Neue', sans-serif !important;
@@ -134,10 +146,10 @@ header,
   background: transparent !important;
 }
 
-/* --- 4. SUB-PAGE & TEAM SECONDARY TABS --- */
+/* --- 5. SUB-PAGE TABS & BUTTONS --- */
 .nav:not(.navbar-nav) .nav-link {
-  font-size: 20px !important;
-  color: #222222 !important;
+  font-size: 19px !important;
+  color: #334155 !important;
   transition: color 0.2s ease-in-out;
 }
 
@@ -147,7 +159,6 @@ header,
   color: var(--banwell-red) !important;
 }
 
-/* --- 5. BUTTONS & INTERACTIVE ACCENTS --- */
 .club-colour {
   color: var(--banwell-red) !important;
 }
@@ -158,7 +169,9 @@ header,
   border: 1px solid var(--banwell-dark-red) !important;
   color: #ffffff !important;
   text-transform: uppercase !important;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border-radius: 4px !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .border-button:hover,
@@ -177,7 +190,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   7. NAVIGATION: BUTTERY SMOOTH DROPDOWNS & PANELS
+   7. NAVIGATION: BUTTERY SMOOTH DROPDOWNS & MEGA-MENU PANELS
    ========================================================================== */
 
 @keyframes bfcSmoothGlide {
@@ -191,13 +204,11 @@ div[class*="report"]:has(a[href*="/match-report"]),
   }
 }
 
-/* Base Dropdown Panel */
 .dropdown-menu {
   position: absolute !important;
   top: 100% !important;
   z-index: 100000 !important;
   background: var(--banwell-charcoal) !important;
-  background-color: var(--banwell-charcoal) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 0 0 6px 6px !important;
@@ -207,7 +218,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   padding: 8px 0 !important;
 }
 
-/* Standard Dropdowns Sizing (Club Info, Contact) */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) > .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
@@ -215,7 +225,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   right: auto !important;
 }
 
-/* Teams Mega-Menu Panel Full-Width */
 .navbar-nav > li.mega-menu > .dropdown-menu,
 .navbar-nav > li.mega-dropdown > .dropdown-menu,
 .dropdown-menu.mega-menu,
@@ -229,7 +238,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   box-sizing: border-box !important;
 }
 
-/* Reset Lists & Containers */
+/* Reset Dropdown Lists */
 .dropdown-menu ul,
 .dropdown-menu ol,
 .dropdown-menu li,
@@ -242,90 +251,57 @@ div[class*="report"]:has(a[href*="/match-report"]),
   background: transparent !important;
 }
 
-/* ==========================================================================
-   8. ERADICATE ALL GLYPHS, CHEVRONS & BROKEN SQUARE ICONS
-   ========================================================================== */
-
-/* 1. Neutralize all framework pseudo-elements generating '>' or chevrons */
+/* Eradicate All Framework Icon Squares and > Symbols */
 .dropdown-menu *::before,
 .dropdown-menu *::after,
-.dropdown-menu a::before,
-.dropdown-menu a::after,
-.dropdown-menu li::before,
-.dropdown-menu li::after,
-.dropdown-menu > li > a::before,
-.dropdown-menu > li > a::after {
-  content: "" !important;
-  content: none !important;
-  display: none !important;
-}
-
-/* 2. Remove all icon tags, font-icons and helper chevrons */
 .dropdown-menu i,
 .dropdown-menu svg,
 .dropdown-menu [class*="fa"],
 .dropdown-menu [class*="glyph"],
 .dropdown-menu [class*="chevron"],
-.dropdown-menu [class*="arrow"],
-.dropdown-menu [class*="angle"] {
-  display: none !important;
-  visibility: hidden !important;
-  width: 0 !important;
-  height: 0 !important;
-  font-size: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-/* 3. Hide redundant standalone category chevron links beside headers */
 .dropdown-menu [class*="col-"] h2 + a,
 .dropdown-menu [class*="col-"] h3 + a,
 .dropdown-menu [class*="col-"] h4 + a,
 .dropdown-menu [class*="col-"] .title + a {
   display: none !important;
+  content: "" !important;
 }
 
-/* ==========================================================================
-   9. HIGH-CONTRAST TEXT STYLING FOR STANDARD DROPDOWNS (CLUB INFO, CONTACT)
-   ========================================================================== */
-
-.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a,
-.navbar-nav > li:not(.mega-dropdown):not(.mega-menu) .dropdown-menu a {
+/* Dropdown Text Contrast */
+.dropdown-menu a,
+.dropdown-menu li a,
+.dropdown-menu span,
+.dropdown-menu .club-colour,
+.dropdown-menu .team-menu-item a,
+.dropdown-menu [class*="col-"] a {
   color: #ffffff !important;
   font-family: 'Montserrat', sans-serif !important;
   font-size: 13.5px !important;
   font-weight: 500 !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+}
+
+.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a {
   display: block !important;
   padding: 10px 22px !important;
   line-height: 1.4 !important;
   border: none !important;
-  border-bottom: none !important;
-  background: transparent !important;
-  text-decoration: none !important;
   transition: all 0.18s ease-in-out !important;
 }
 
-.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a:hover,
-.navbar-nav > li:not(.mega-dropdown):not(.mega-menu) .dropdown-menu a:hover {
+.dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a:hover {
   background: rgba(179, 0, 27, 0.22) !important;
   color: #ffffff !important;
   padding-left: 26px !important;
   border-left: 3px solid var(--banwell-red) !important;
 }
 
-/* ==========================================================================
-   10. TEAMS MEGA-MENU: RESTORED HEADERS & SQUAD LISTS
-   ========================================================================== */
-
-/* Restored Crimson Headings: BANWELL FC 1ST TEAM, ADULTS, YOUTH */
+/* Teams Mega-Menu Section Headers */
 .dropdown-menu [class*="col-"] h2,
 .dropdown-menu [class*="col-"] h3,
 .dropdown-menu [class*="col-"] h4,
 .dropdown-menu [class*="col-"] .title,
-.dropdown-menu [class*="col-"] h2 a,
-.dropdown-menu [class*="col-"] h3 a,
-.dropdown-menu [class*="col-"] h4 a,
-.dropdown-menu [class*="col-"] .title a,
 .dropdown-menu [class*="col-"] a[href*="/teams/adults"],
 .dropdown-menu [class*="col-"] a[href*="/teams/youth"] {
   display: inline-block !important;
@@ -339,34 +315,16 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border: none !important;
   text-decoration: none !important;
   line-height: 1.1 !important;
-  vertical-align: middle !important;
-}
-
-/* Individual Team Squad Rows (White Text, Borderless) */
-.dropdown-menu .team-menu-item,
-.dropdown-menu [class*="col-"] li {
-  border: none !important;
-  border-bottom: none !important;
-  margin: 0 0 4px 0 !important;
-  padding: 0 !important;
 }
 
 .dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not(.title),
 .dropdown-menu .team-menu-item a {
-  color: #ffffff !important;
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
   display: block !important;
   padding: 6px 8px !important;
-  border: none !important;
-  border-bottom: none !important;
   border-radius: 3px !important;
-  text-decoration: none !important;
   transition: all 0.18s ease !important;
 }
 
-/* Team Link Hover State */
 .dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not(.title):hover,
 .dropdown-menu .team-menu-item a:hover {
   background: rgba(179, 0, 27, 0.28) !important;
@@ -375,9 +333,123 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-left: 2px solid var(--banwell-red) !important;
 }
 
-/* 1st Team Thumbnail Image */
 .dropdown-menu img {
   border-radius: 6px !important;
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* ==========================================================================
+   8. ELEVATED TEAM PAGE SPONSORS (PROMINENT COMMERCIAL SHOWCASE)
+   ========================================================================== */
+
+/* Target sponsor sidebar cards across team pages */
+.col-lg-3 .card:has(img),
+.col-lg-3 .panel:has(img),
+.col-lg-3 div[class*="sponsor"],
+aside [class*="sponsor"] {
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-top: 3px solid var(--banwell-red) !important;
+  border-radius: 8px !important;
+  padding: 16px 14px !important;
+  margin-bottom: 20px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+  text-align: center !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease !important;
+}
+
+.col-lg-3 .card:has(img):hover,
+.col-lg-3 div[class*="sponsor"]:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Enlarged, High-Definition Sponsor Logos */
+.col-lg-3 .card img,
+.col-lg-3 div[class*="sponsor"] img {
+  max-height: 110px !important;
+  max-width: 90% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  margin: 0 auto 10px auto !important;
+  display: block !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+}
+
+/* "KIT SPONSOR" Label Styling */
+.col-lg-3 .card h5,
+.col-lg-3 .card span,
+.col-lg-3 div[class*="sponsor"] span,
+.col-lg-3 div[class*="sponsor"] p {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 15px !important;
+  letter-spacing: 1px !important;
+  color: var(--banwell-red) !important;
+  margin: 4px 0 0 0 !important;
+  text-transform: uppercase !important;
+}
+
+/* ==========================================================================
+   9. CROSS-DEVICE RESPONSIVE HARDENING (MOBILE, TABLET, DESKTOP)
+   ========================================================================== */
+
+/* Tablet & Mobile Breakpoints (< 1200px) */
+@media (max-width: 1199.98px) {
+  #team-name {
+    font-size: 26px !important;
+  }
+  
+  .charter-standard img {
+    height: 50px !important;
+  }
+
+  /* Prevent sidebars from clipping on tablets */
+  .col-lg-3 {
+    margin-top: 24px !important;
+  }
+  
+  /* Make embedded maps fluid and touch-friendly */
+  iframe[src*="google.com/maps"] {
+    width: 100% !important;
+    max-height: 340px !important;
+  }
+}
+
+/* Mobile Handhelds (< 768px) */
+@media (max-width: 767.98px) {
+  body {
+    padding: 0 !important;
+  }
+
+  .header-top {
+    padding: 8px 12px !important;
+  }
+
+  #team-name {
+    font-size: 22px !important;
+  }
+
+  .charter-standard img {
+    height: 42px !important;
+  }
+
+  /* Sponsors display in a clean 2-column grid on mobile */
+  .col-lg-3 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .col-lg-3 .card:has(img),
+  .col-lg-3 div[class*="sponsor"] {
+    margin-bottom: 0 !important;
+    padding: 10px 8px !important;
+  }
+
+  .col-lg-3 .card img,
+  .col-lg-3 div[class*="sponsor"] img {
+    max-height: 80px !important;
+  }
 }
