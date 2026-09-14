@@ -3,11 +3,11 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.3.0
+   Version:     2.4.0
    Date:        14 September 2026
-   Build Notes: Native cross-document View Transitions (zero-flash page crossfades);
-                bidirectional smooth dropdown fade/glide (in and out);
-                grounded canvas background; elevated team sponsor showcases.
+   Build Notes: Impermeable header stacking context (stops button bleed-through);
+                restored homepage hero photo (rescued from z-index -1);
+                slower, luxury 0.42s cross-page transitions & 0.34s smooth menus.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -25,30 +25,30 @@
   --banwell-page-bg: #f4f6fa;
 }
 
-/* --- 2. ZERO-FLASH CANVAS & CROSS-PAGE VIEW TRANSITIONS --- */
+/* --- 2. LUXURY CROSS-PAGE VIEW TRANSITIONS (0.42s PREMIUM TIMING) --- */
 @view-transition {
-  navigation: auto; /* Native Chrome/Edge cross-document page transitions */
+  navigation: auto;
 }
 
 ::view-transition-old(root) {
-  animation: 0.22s cubic-bezier(0.4, 0, 1, 1) both bfcFadeOut;
+  animation: 0.32s cubic-bezier(0.4, 0, 1, 1) both bfcFadeOut;
 }
 
 ::view-transition-new(root) {
-  animation: 0.26s cubic-bezier(0, 0, 0.2, 1) both bfcFadeIn;
+  animation: 0.42s cubic-bezier(0.22, 1, 0.36, 1) both bfcFadeIn;
 }
 
 @keyframes bfcFadeOut {
   from { opacity: 1; transform: scale(1); }
-  to { opacity: 0; transform: scale(0.996); }
+  to { opacity: 0; transform: scale(0.992); }
 }
 
 @keyframes bfcFadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Base Canvas Grounding (Prevents white background flashes between page unloads) */
+/* Base Canvas Grounding */
 html {
   background-color: var(--banwell-charcoal) !important;
 }
@@ -72,16 +72,51 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HEADER TOP & SEAMLESS NAVIGATION BAR --- */
-.header-top,
+/* --- 3. HOMEPAGE HERO IMAGE RESTORATION --- */
+.home-hero-image,
+img.home-hero-image,
+section .home-hero-image {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  z-index: 1 !important; /* Rescued from z-index: -1 */
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+section.position-relative {
+  position: relative !important;
+  background-color: transparent !important;
+}
+
+section.position-relative .container {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* --- 4. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
 header,
 #header,
+.header,
 .main-header {
+  position: relative !important;
+  z-index: 9999999 !important; /* Prevents buttons & cards from piercing through */
   background-color: var(--banwell-black) !important;
   border: none !important;
   border-bottom: none !important;
   box-shadow: none !important;
-  padding: 12px 0 !important;
+  padding: 12px 0 0 0 !important;
+}
+
+.header-top {
+  background-color: var(--banwell-black) !important;
+  border: none !important;
+  border-bottom: none !important;
+  padding-bottom: 12px !important;
 }
 
 #team-name {
@@ -113,7 +148,7 @@ header,
 .navbar-default,
 .header-navigation {
   position: relative !important;
-  z-index: 99999 !important;
+  z-index: 9999999 !important;
   background-color: var(--banwell-black) !important;
   border-top: none !important;
   border-bottom: 2px solid var(--banwell-red) !important;
@@ -149,7 +184,7 @@ header,
   color: #ffffff !important;
   letter-spacing: 1px !important;
   background: transparent !important;
-  transition: color 0.2s ease-in-out;
+  transition: color 0.25s ease-in-out;
 }
 
 .navbar-nav > li > a:hover,
@@ -160,7 +195,7 @@ header,
   background: transparent !important;
 }
 
-/* --- 4. SUB-PAGE TABS & BUTTONS --- */
+/* --- 5. SUB-PAGE TABS & BUTTONS --- */
 .nav:not(.navbar-nav) .nav-link {
   font-size: 19px !important;
   color: #334155 !important;
@@ -185,7 +220,7 @@ header,
   text-transform: uppercase !important;
   border-radius: 4px !important;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
 .border-button:hover,
@@ -195,7 +230,7 @@ header,
   color: #ffffff !important;
 }
 
-/* --- 5. HOMEPAGE: HIDE RECENT MATCH REPORTS --- */
+/* --- 6. HOMEPAGE: HIDE RECENT MATCH REPORTS --- */
 [class*="col-"]:has(a[href*="/match-report"]),
 div[class*="report"]:has(a[href*="/match-report"]),
 .card:has(a[href*="/match-report"]),
@@ -204,32 +239,34 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   6. BIDIRECTIONAL SMOOTH MENUS (FADES AND GLIDES IN AND OUT)
+   7. BIDIRECTIONAL DROPDOWNS (0.34s DECELERATION GLIDE)
    ========================================================================== */
 
 .dropdown-menu {
   position: absolute !important;
   top: 100% !important;
-  z-index: 100000 !important;
+  z-index: 10000000 !important; /* Renders above all page content */
   background: var(--banwell-charcoal) !important;
+  background-color: var(--banwell-charcoal) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 0 0 6px 6px !important;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.9) !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95) !important;
   padding: 8px 0 !important;
 
-  /* Bidirectional Transition */
+  /* Bidirectional Smooth Fade & Glide */
   display: block !important;
   opacity: 0 !important;
   visibility: hidden !important;
-  transform: translate3d(0, -8px, 0) !important;
-  transition: opacity 0.22s cubic-bezier(0.25, 1, 0.5, 1),
-              transform 0.22s cubic-bezier(0.25, 1, 0.5, 1),
-              visibility 0.22s !important;
+  transform: translate3d(0, -10px, 0) !important;
+  transition: opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0.34s !important;
   pointer-events: none !important;
+  isolation: isolate !important;
 }
 
-/* Active / Open Dropdown State (Hover & Click Supported) */
+/* Active / Open Dropdown State */
 .dropdown-menu.show,
 .navbar-nav .dropdown:hover > .dropdown-menu,
 .navbar-nav > li:hover > .dropdown-menu,
@@ -240,7 +277,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   pointer-events: auto !important;
 }
 
-/* Standard Dropdown Sizing (Club Info, Contact) */
+/* Single-Column Dropdowns Sizing (Club Info, Contact) */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) > .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
@@ -311,7 +348,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   padding: 10px 22px !important;
   line-height: 1.4 !important;
   border: none !important;
-  transition: all 0.18s ease-in-out !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 .dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a:hover {
@@ -328,7 +365,8 @@ div[class*="report"]:has(a[href*="/match-report"]),
 .dropdown-menu [class*="col-"] .title,
 .dropdown-menu [class*="col-"] a[href*="/teams/adults"],
 .dropdown-menu [class*="col-"] a[href*="/teams/youth"],
-.dropdown-menu [class*="col-"] a[href*="/team/category/girls"] {
+.dropdown-menu [class*="col-"] a[href*="/team/category/girls"],
+.dropdown-menu [class*="col-"] a[href*="/teams/girls"] {
   display: inline-block !important;
   font-family: 'Bebas Neue', sans-serif !important;
   color: var(--banwell-red) !important;
@@ -342,15 +380,15 @@ div[class*="report"]:has(a[href*="/match-report"]),
   line-height: 1.1 !important;
 }
 
-.dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not(.title),
+.dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not([href*="/team/category/girls"]):not([href*="/teams/girls"]):not(.title),
 .dropdown-menu .team-menu-item a {
   display: block !important;
   padding: 6px 8px !important;
   border-radius: 3px !important;
-  transition: all 0.18s ease !important;
+  transition: all 0.2s ease !important;
 }
 
-.dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not(.title):hover,
+.dropdown-menu [class*="col-"] a:not([href*="/teams/adults"]):not([href*="/teams/youth"]):not([href*="/team/category/girls"]):not([href*="/teams/girls"]):not(.title):hover,
 .dropdown-menu .team-menu-item a:hover {
   background: rgba(179, 0, 27, 0.28) !important;
   color: #ffffff !important;
@@ -365,7 +403,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   7. ELEVATED TEAM PAGE SPONSORS (PROMINENT COMMERCIAL SHOWCASE)
+   8. ELEVATED TEAM PAGE SPONSORS (PROMINENT COMMERCIAL SHOWCASE)
    ========================================================================== */
 
 .col-lg-3 .card:has(img),
@@ -380,7 +418,7 @@ aside [class*="sponsor"] {
   margin-bottom: 20px !important;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
   text-align: center !important;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease !important;
 }
 
 .col-lg-3 .card:has(img):hover,
@@ -414,7 +452,7 @@ aside [class*="sponsor"] {
 }
 
 /* ==========================================================================
-   8. CROSS-DEVICE RESPONSIVE HARDENING (MOBILE, TABLET, DESKTOP)
+   9. CROSS-DEVICE RESPONSIVE HARDENING (MOBILE, TABLET, DESKTOP)
    ========================================================================== */
 
 @media (max-width: 1199.98px) {
