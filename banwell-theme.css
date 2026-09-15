@@ -3,12 +3,16 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.4
+   Version:     2.9.5
    Date:        15 September 2026
-   Build Notes: Added hardened .bfc-sponsor-lounge classes to eliminate WYSIWYG
-                inline-style stripping and tag separation; fixed fixtures button bleed;
-                unified crimson category headers; click-to-dismiss mutual exclusion;
-                impermeable z-index header; luxury 0.42s View Transitions.
+   Build Notes: Full responsive cross-device hardening.
+                - Mobile: Stacks in-page sponsor plinth tables vertically into 
+                  full-width touch targets.
+                - Mobile: Keeps Fixture cards full-width while pairing sponsors 
+                  into a clean 2-column grid.
+                - Mobile: Prevents header crest collision on screens < 400px.
+                - Tablet: Balances mega-menu columns and column-drop spacing.
+                - Desktop/4K: Preserves executive plinth alignment and z-index hierarchy.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -40,25 +44,13 @@
 }
 
 @keyframes bfcFadeOut {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.992);
-  }
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.992); }
 }
 
 @keyframes bfcFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Base Canvas Grounding */
@@ -73,7 +65,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Force standard page sections below header stacking context */
 main,
 section,
 .main-content {
@@ -81,7 +72,6 @@ section,
   z-index: 1 !important;
 }
 
-/* Headings & Display Elements (Bebas Neue) */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 #team-name,
@@ -119,7 +109,7 @@ section.position-relative .container {
   z-index: 2 !important;
 }
 
-/* --- 4. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
+/* --- 4. IMPERMEABLE HEADER & NAVIGATION BAR --- */
 header,
 #header,
 .header,
@@ -128,15 +118,12 @@ header,
   z-index: 9999999 !important;
   background-color: var(--banwell-black) !important;
   border: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
   padding: 12px 0 0 0 !important;
 }
 
 .header-top {
   background-color: var(--banwell-black) !important;
   border: none !important;
-  border-bottom: none !important;
   padding-bottom: 12px !important;
 }
 
@@ -150,20 +137,17 @@ header,
   color: var(--banwell-muted) !important;
 }
 
-/* Club Crest Replacement */
 #badge {
   background: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984804309-43926/0/thumbnail_CustomPageImage.jpg') center / contain no-repeat !important;
   background-color: transparent !important;
 }
 
-/* England Football 2-Star Accreditation Badge */
 .charter-standard img {
   content: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984046744-28507/0/thumbnail_CustomPageImage.jpg') !important;
   height: 62px !important;
   width: auto !important;
 }
 
-/* Main Navigation Bar Container */
 nav.club-colour-bg,
 header .club-colour-bg,
 .navbar,
@@ -176,16 +160,12 @@ header .club-colour-bg,
   border-bottom: 2px solid var(--banwell-red) !important;
 }
 
-/* Reset Navbar List Items */
 .navbar-nav > li,
 .navbar-nav > li.mega-menu,
-.navbar-nav > li.dropdown,
-.navbar-nav > li.open {
+.navbar-nav > li.dropdown {
   background: transparent !important;
-  background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  border-radius: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -217,7 +197,7 @@ header .club-colour-bg,
   background: transparent !important;
 }
 
-/* --- 5. SUB-PAGE TABS & BUTTONS --- */
+/* --- 5. BUTTONS & UTILITIES --- */
 .nav:not(.navbar-nav) .nav-link {
   font-size: 19px !important;
   color: #334155 !important;
@@ -234,7 +214,6 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
-/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -260,7 +239,7 @@ a.button.club-colour-bg:hover,
   color: #ffffff !important;
 }
 
-/* --- 6. HOMEPAGE: HIDE RECENT MATCH REPORTS --- */
+/* Hide Recent Match Reports on Homepage */
 [class*="col-"]:has(a[href*="/match-report"]),
 div[class*="report"]:has(a[href*="/match-report"]),
 .card:has(a[href*="/match-report"]),
@@ -268,23 +247,17 @@ div[class*="report"]:has(a[href*="/match-report"]),
   display: none !important;
 }
 
-/* ==========================================================================
-   7. BIDIRECTIONAL DROPDOWNS & MUTUAL EXCLUSION HOVER CONTROLS
-   ========================================================================== */
-
+/* --- 6. BIDIRECTIONAL DROPDOWNS --- */
 .dropdown-menu {
   position: absolute !important;
   top: 100% !important;
   z-index: 10000000 !important;
   background: var(--banwell-charcoal) !important;
-  background-color: var(--banwell-charcoal) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 0 0 6px 6px !important;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95) !important;
   padding: 8px 0 !important;
-
-  /* Bidirectional Smooth Fade & Glide */
   display: block !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -293,10 +266,8 @@ div[class*="report"]:has(a[href*="/match-report"]),
               transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
               visibility 0.34s !important;
   pointer-events: none !important;
-  isolation: isolate !important;
 }
 
-/* Active Hover State */
 .navbar-nav > li:not(.bfc-closed):hover > .dropdown-menu,
 .navbar-nav > li.mega-menu:not(.bfc-closed):hover .dropdown-menu {
   opacity: 1 !important;
@@ -305,7 +276,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   pointer-events: auto !important;
 }
 
-/* Click-to-Dismiss State Override */
 .navbar-nav > li.bfc-closed .dropdown-menu,
 .navbar-nav > li.bfc-closed:hover .dropdown-menu,
 .navbar-nav .dropdown.bfc-closed .dropdown-menu {
@@ -313,22 +283,16 @@ div[class*="report"]:has(a[href*="/match-report"]),
   visibility: hidden !important;
   pointer-events: none !important;
   transform: translate3d(0, -10px, 0) !important;
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s !important;
 }
 
-/* Single-Column Dropdowns Sizing */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) .dropdown-menu {
   min-width: 285px !important;
-  width: auto !important;
   left: 0 !important;
   right: auto !important;
 }
 
-/* Teams Mega-Menu Panel Full-Width Expansion */
 .navbar-nav > li.mega-menu .dropdown-menu,
-.navbar-nav > li.mega-dropdown .dropdown-menu,
-.dropdown-menu.mega-menu,
-.dropdown-menu.mega-dropdown-menu {
+.navbar-nav > li.mega-dropdown .dropdown-menu {
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
@@ -338,55 +302,39 @@ div[class*="report"]:has(a[href*="/match-report"]),
   box-sizing: border-box !important;
 }
 
-/* Reset Lists inside Menus */
 .dropdown-menu ul,
 .dropdown-menu ol,
-.dropdown-menu li,
-.dropdown-menu [class*="col-"] ul,
-.dropdown-menu [class*="col-"] li {
+.dropdown-menu li {
   list-style: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  border: none !important;
-  background: transparent !important;
 }
 
-/* Eradicate Icon Squares & Chevrons */
 .dropdown-menu *::before,
 .dropdown-menu *::after,
 .dropdown-menu i,
 .dropdown-menu svg,
 .dropdown-menu [class*="fa"],
 .dropdown-menu [class*="glyph"],
-.dropdown-menu [class*="chevron"],
-.dropdown-menu [class*="col-"] h2 + a,
-.dropdown-menu [class*="col-"] h3 + a,
-.dropdown-menu [class*="col-"] h4 + a,
-.dropdown-menu [class*="col-"] .title + a {
+.dropdown-menu [class*="chevron"] {
   display: none !important;
   content: "" !important;
 }
 
-/* Dropdown Text Contrast */
 .dropdown-menu a,
 .dropdown-menu li a,
 .dropdown-menu span,
-.dropdown-menu .club-colour,
-.dropdown-menu .team-menu-item a,
 .dropdown-menu [class*="col-"] a {
   color: #ffffff !important;
   font-family: 'Montserrat', sans-serif !important;
   font-size: 13.5px !important;
   font-weight: 500 !important;
-  opacity: 1 !important;
   text-decoration: none !important;
 }
 
 .dropdown-menu:not(.mega-menu):not(.mega-dropdown-menu) a {
   display: block !important;
   padding: 10px 22px !important;
-  line-height: 1.4 !important;
-  border: none !important;
   transition: all 0.2s ease-in-out !important;
 }
 
@@ -397,15 +345,10 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-left: 3px solid var(--banwell-red) !important;
 }
 
-/* Teams Mega-Menu Category Headers */
 .dropdown-menu [class*="col-"] h2,
 .dropdown-menu [class*="col-"] h3,
 .dropdown-menu [class*="col-"] h4,
-.dropdown-menu [class*="col-"] .title,
 .dropdown-menu [class*="col-"] a[href*="/team/category/"],
-.dropdown-menu [class*="col-"] a[href*="/teams/adults"],
-.dropdown-menu [class*="col-"] a[href*="/teams/youth"],
-.dropdown-menu [class*="col-"] a[href*="/teams/girls"],
 .dropdown-menu [class*="col-"] .position-relative h3 a {
   display: inline-block !important;
   font-family: 'Bebas Neue', sans-serif !important;
@@ -416,25 +359,20 @@ div[class*="report"]:has(a[href*="/match-report"]),
   margin: 0 0 16px 0 !important;
   padding: 0 !important;
   border: none !important;
-  text-decoration: none !important;
-  line-height: 1.1 !important;
-  vertical-align: middle !important;
 }
 
-/* Individual Team Squad Rows */
-.dropdown-menu [class*="col-"] a:not([href*="/team/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):not([href*="/teams/girls"]):not(.stretched-link):not(.title),
+.dropdown-menu [class*="col-"] a:not([href*="/team/category/"]):not(.stretched-link),
 .dropdown-menu .team-menu-item a {
   display: block !important;
   color: #ffffff !important;
   font-family: 'Montserrat', sans-serif !important;
   font-size: 13px !important;
-  font-weight: 500 !important;
   padding: 6px 8px !important;
   border-radius: 3px !important;
   transition: all 0.2s ease !important;
 }
 
-.dropdown-menu [class*="col-"] a:not([href*="/team/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):not([href*="/teams/girls"]):not(.stretched-link):not(.title):hover,
+.dropdown-menu [class*="col-"] a:not([href*="/team/category/"]):not(.stretched-link):hover,
 .dropdown-menu .team-menu-item a:hover {
   background: rgba(179, 0, 27, 0.28) !important;
   color: #ffffff !important;
@@ -442,18 +380,8 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-left: 2px solid var(--banwell-red) !important;
 }
 
-.dropdown-menu img {
-  border-radius: 6px !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6) !important;
-}
-
-/* ==========================================================================
-   8. EXECUTIVE SPONSOR PLAQUES (SIDEBAR)
-   ========================================================================== */
-
+/* --- 7. SIDEBAR SPONSOR PLAQUES --- */
 .col-lg-3 .card:has(img),
-.col-lg-3 .panel:has(img),
 .col-lg-3 div[class*="sponsor"],
 aside [class*="sponsor"] {
   background: #ffffff !important;
@@ -461,181 +389,64 @@ aside [class*="sponsor"] {
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 8px !important;
   overflow: hidden !important;
-  padding: 0 !important;
   margin-bottom: 20px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
   text-align: center !important;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
 }
 
 .col-lg-3 .card:has(img):hover,
 .col-lg-3 div[class*="sponsor"]:hover {
   transform: translateY(-3px) !important;
-  border-color: #cbd5e1 !important;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
-.col-lg-3 .card:has(img) .card-body,
-.col-lg-3 .card .card-body:has(img) {
+.col-lg-3 .card:has(img) .card-body {
   padding: 16px 12px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   min-height: 120px !important;
   height: 120px !important;
-  background: #ffffff !important;
-  overflow: hidden !important;
 }
 
-.col-lg-3 .card:has(img) .ratio,
-.col-lg-3 .ratio-contain {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 100% !important;
-  width: 100% !important;
-  padding-top: 0 !important;
-  position: relative !important;
-}
-
-.col-lg-3 .card:has(img) .ratio::before,
-.col-lg-3 .ratio::before {
+.col-lg-3 .card:has(img) .ratio::before {
   display: none !important;
   content: none !important;
 }
 
-.col-lg-3 .card:has(img) .ratio img,
 .col-lg-3 .card:has(img) img {
-  position: static !important;
   max-height: 96px !important;
   height: 90px !important;
   max-width: 92% !important;
   width: auto !important;
   object-fit: contain !important;
   transform: scale(1.22) !important;
-  transform-origin: center center !important;
   margin: 0 auto !important;
   display: block !important;
-  filter: none !important;
-  box-shadow: none !important;
-  border: none !important;
 }
 
 .col-lg-3 .card:has(img) .card-footer {
   background: #f8fafc !important;
   border-top: 1px solid #e2e8f0 !important;
   padding: 7px 12px !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
 }
 
 .col-lg-3 .card:has(img) .card-footer h2,
-.col-lg-3 .card:has(img) .card-footer .h5,
-.col-lg-3 .card:has(img) .card-footer p,
 .col-lg-3 .card:has(img) .card-footer span {
   font-family: 'Bebas Neue', sans-serif !important;
   font-size: 13.5px !important;
   letter-spacing: 1.2px !important;
   color: var(--banwell-red) !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: 1.2 !important;
   text-transform: uppercase !important;
+  margin: 0 !important;
 }
 
 /* ==========================================================================
-   9. IN-PAGE STADIUM SPONSOR LOUNGE (.bfc-sponsor-lounge)
+   8. RESPONSIVE BREAKPOINTS & MOBILE STACKING
    ========================================================================== */
 
-.bfc-sponsor-lounge {
-  background: #0e1117 !important;
-  border-left: 5px solid var(--banwell-red) !important;
-  border-radius: 8px !important;
-  padding: 24px !important;
-  margin-bottom: 24px !important;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
-  font-family: 'Montserrat', sans-serif !important;
-}
-
-.bfc-sponsor-lounge-header {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
-  padding-bottom: 12px !important;
-  margin-bottom: 20px !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-}
-
-.bfc-sponsor-lounge-header h3 {
-  font-family: 'Bebas Neue', sans-serif !important;
-  font-size: 28px !important;
-  color: #ffffff !important;
-  margin: 0 !important;
-  letter-spacing: 1px !important;
-  line-height: 1 !important;
-}
-
-.bfc-sponsor-lounge-header span {
-  font-family: 'Montserrat', sans-serif !important;
-  font-size: 12px !important;
-  color: var(--banwell-red) !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.8px !important;
-  text-transform: uppercase !important;
-}
-
-.bfc-sponsor-grid {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 18px !important;
-  justify-content: center !important;
-  align-items: stretch !important;
-}
-
-.bfc-sponsor-plinth {
-  flex: 1 1 200px !important;
-  max-width: 320px !important;
-  min-width: 180px !important;
-  background: #ffffff !important;
-  border-radius: 6px !important;
-  height: 140px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 14px 18px !important;
-  text-decoration: none !important;
-  cursor: pointer !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
-}
-
-.bfc-sponsor-plinth:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45) !important;
-}
-
-.bfc-sponsor-plinth img {
-  max-height: 112px !important;
-  max-width: 92% !important;
-  width: auto !important;
-  height: auto !important;
-  object-fit: contain !important;
-  display: block !important;
-  margin: 0 auto !important;
-  border: none !important;
-  box-shadow: none !important;
-  filter: none !important;
-}
-
-/* ==========================================================================
-   10. CROSS-DEVICE RESPONSIVE HARDENING & MOBILE HEADER ENHANCEMENT
-   ========================================================================== */
-
-/* Tablet Breakpoints (768px – 1199.98px) */
+/* Tablets & Laptops (768px – 1199.98px) */
 @media (max-width: 1199.98px) {
   #team-name {
     font-size: 26px !important;
@@ -661,24 +472,27 @@ aside [class*="sponsor"] {
     padding: 0 !important;
   }
 
+  /* Compact Header Architecture */
   .header-top {
-    padding: 10px 14px !important;
+    padding: 8px 12px !important;
   }
 
   .header-top .container > .d-flex {
     position: relative !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     align-items: center !important;
   }
 
   .header-top #badge {
-    margin: 0 auto !important;
+    margin: 0 !important;
+    width: 52px !important;
+    height: 52px !important;
   }
 
   .header-top .header-logos {
     display: flex !important;
     position: absolute !important;
-    right: 6px !important;
+    right: 8px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     margin: 0 !important;
@@ -693,28 +507,66 @@ aside [class*="sponsor"] {
     display: none !important;
   }
 
+  /* Sidebar Grid: Keeps Fixtures full-width, pairs sponsors in a 2-col grid */
   .col-lg-3 {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
   }
 
+  .col-lg-3 > .card:not(:has(img[src*="sponsor"])) {
+    grid-column: 1 / -1 !important;
+    margin-bottom: 8px !important;
+  }
+
   .col-lg-3 .card:has(img),
   .col-lg-3 div[class*="sponsor"] {
     margin-bottom: 0 !important;
-    padding: 0 !important;
   }
 
-  .col-lg-3 .card img,
-  .col-lg-3 div[class*="sponsor"] img {
-    max-height: 70px !important;
-    height: 65px !important;
-    transform: scale(1.15) !important;
+  .col-lg-3 .card img {
+    max-height: 65px !important;
+    height: 60px !important;
+    transform: scale(1.1) !important;
   }
 
-  .bfc-sponsor-plinth {
-    flex: 1 1 100% !important;
-    max-width: 100% !important;
-    height: 120px !important;
+  /* In-Page Sponsor Lounge: Vertical Stacking for HTML Tables */
+  div[style*="#0e1117"] table[style*="border-spacing"] {
+    display: block !important;
+    width: 100% !important;
+    border-spacing: 0 !important;
+  }
+
+  div[style*="#0e1117"] table[style*="border-spacing"] > tbody,
+  div[style*="#0e1117"] table[style*="border-spacing"] tr {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  div[style*="#0e1117"] table[style*="border-spacing"] td {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 110px !important;
+    box-sizing: border-box !important;
+    padding: 10px 14px !important;
+  }
+
+  /* Header Title Stacking in In-Page Lounge */
+  div[style*="#0e1117"] table:not([style*="border-spacing"]) tr {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+
+  div[style*="#0e1117"] table:not([style*="border-spacing"]) td {
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding-bottom: 2px !important;
   }
 }
