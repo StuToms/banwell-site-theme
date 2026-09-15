@@ -3,12 +3,13 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.7
+   Version:     2.9.8
    Date:        15 September 2026
-   Build Notes: Homepage hero vertical gap eliminated; Section 3 tightens 
-                container padding and welcome card offsets; maintains dead-centered 
-                mobile header crest; preserves full .bfc-sponsor-lounge suite and 
-                table-stacking responsiveness; 0.42s View Transitions.
+   Build Notes: Hero title integrated into charcoal lounge; external CMS 
+                heading permanently hidden to eliminate color discrepancies 
+                and awkward word-wrapping across mobile viewports; hero top gap 
+                tightened; dead-centered mobile crest preserved; full sponsor 
+                plinth suite with table stacking; 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -61,7 +62,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Page sections below header stacking context */
 main,
 section,
 .main-content {
@@ -69,7 +69,6 @@ section,
   z-index: 1 !important;
 }
 
-/* Headings & Display Elements (Bebas Neue) */
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6,
 #team-name,
@@ -81,7 +80,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE & GAP REDUCTION --- */
+/* --- 3. HOMEPAGE HERO IMAGE & SEAMLESS TIGHT INTEGRATION --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -107,23 +106,28 @@ section.position-relative .container {
   z-index: 2 !important;
 }
 
-/* Tighten spacing between navigation bar and Welcome Card */
+/* Eliminate top void above Hero content */
 section.position-relative .container.py-5.py-lg-7,
 section.position-relative .container {
-  padding-top: 24px !important;
+  padding-top: 18px !important;
 }
 
 .welcome-card,
 .welcome-card .card-body {
   padding-top: 0 !important;
   margin-top: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-.welcome-card h1.club-colour-border-bottom {
-  margin-top: 0 !important;
+/* Suppress redundant CMS-generated external heading */
+.welcome-card h1.club-colour-border-bottom,
+.welcome-card .card-body > h1,
+.welcome-card .club-colour-border-top {
+  display: none !important;
 }
 
 /* --- 4. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
@@ -157,20 +161,17 @@ header,
   color: var(--banwell-muted) !important;
 }
 
-/* Club Crest Replacement */
 #badge {
   background: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984804309-43926/0/thumbnail_CustomPageImage.jpg') center / contain no-repeat !important;
   background-color: transparent !important;
 }
 
-/* England Football 2-Star Accreditation Badge */
 .charter-standard img {
   content: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984046744-28507/0/thumbnail_CustomPageImage.jpg') !important;
   height: 62px !important;
   width: auto !important;
 }
 
-/* Main Navigation Bar Container */
 nav.club-colour-bg,
 header .club-colour-bg,
 .navbar,
@@ -183,7 +184,6 @@ header .club-colour-bg,
   border-bottom: 2px solid var(--banwell-red) !important;
 }
 
-/* Reset Navbar List Items */
 .navbar-nav > li,
 .navbar-nav > li.mega-menu,
 .navbar-nav > li.dropdown,
@@ -241,7 +241,6 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
-/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -290,8 +289,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-radius: 0 0 6px 6px !important;
   box-shadow: 0 24px 50px rgba(0, 0, 0, 0.95) !important;
   padding: 8px 0 !important;
-
-  /* Bidirectional Smooth Fade & Glide */
   display: block !important;
   opacity: 0 !important;
   visibility: hidden !important;
@@ -303,7 +300,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   isolation: isolate !important;
 }
 
-/* Active Hover State */
 .navbar-nav > li:not(.bfc-closed):hover > .dropdown-menu,
 .navbar-nav > li.mega-menu:not(.bfc-closed):hover .dropdown-menu {
   opacity: 1 !important;
@@ -312,7 +308,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   pointer-events: auto !important;
 }
 
-/* Click-to-Dismiss State Override */
 .navbar-nav > li.bfc-closed .dropdown-menu,
 .navbar-nav > li.bfc-closed:hover .dropdown-menu,
 .navbar-nav .dropdown.bfc-closed .dropdown-menu {
@@ -323,7 +318,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s !important;
 }
 
-/* Single-Column Dropdowns Sizing */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
@@ -331,7 +325,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   right: auto !important;
 }
 
-/* Teams Mega-Menu Panel Full-Width Expansion */
 .navbar-nav > li.mega-menu .dropdown-menu,
 .navbar-nav > li.mega-dropdown .dropdown-menu,
 .dropdown-menu.mega-menu,
@@ -345,7 +338,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   box-sizing: border-box !important;
 }
 
-/* Reset Lists inside Menus */
 .dropdown-menu ul,
 .dropdown-menu ol,
 .dropdown-menu li,
@@ -358,7 +350,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   background: transparent !important;
 }
 
-/* Eradicate Icon Squares & Chevrons */
 .dropdown-menu *::before,
 .dropdown-menu *::after,
 .dropdown-menu i,
@@ -374,7 +365,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   content: "" !important;
 }
 
-/* Dropdown Text Contrast */
 .dropdown-menu a,
 .dropdown-menu li a,
 .dropdown-menu span,
@@ -404,7 +394,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-left: 3px solid var(--banwell-red) !important;
 }
 
-/* Teams Mega-Menu Category Headers */
 .dropdown-menu [class*="col-"] h2,
 .dropdown-menu [class*="col-"] h3,
 .dropdown-menu [class*="col-"] h4,
@@ -428,7 +417,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   vertical-align: middle !important;
 }
 
-/* Individual Team Squad Rows */
 .dropdown-menu [class*="col-"] a:not([href*="/team/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):not([href*="/teams/girls"]):not(.stretched-link):not(.title),
 .dropdown-menu .team-menu-item a {
   display: block !important;
@@ -703,6 +691,13 @@ aside [class*="sponsor"] {
   #team-name,
   .header-top .d-none.d-sm-flex {
     display: none !important;
+  }
+
+  /* Responsive In-Card Hero Typography */
+  .bfc-home-container h1 {
+    font-size: 32px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 10px !important;
   }
 
   /* Sidebar Grid: Isolates Fixtures full-width, pairs sponsors 2-by-2 */
