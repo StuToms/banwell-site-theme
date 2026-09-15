@@ -3,13 +3,13 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.8
+   Version:     2.9.9
    Date:        15 September 2026
-   Build Notes: Hero title integrated into charcoal lounge; external CMS 
-                heading permanently hidden to eliminate color discrepancies 
-                and awkward word-wrapping across mobile viewports; hero top gap 
-                tightened; dead-centered mobile crest preserved; full sponsor 
-                plinth suite with table stacking; 0.42s View Transitions.
+   Build Notes: Enlarged mobile crest to 78px with 82px container clearance;
+                desktop and tablet dimensions remain untouched; hero title
+                integrated into charcoal lounge; external CMS heading hidden;
+                hero top gap tightened; dead-centered mobile layout; in-page
+                table stacking; 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -656,22 +656,23 @@ aside [class*="sponsor"] {
     padding: 0 !important;
   }
 
-  /* Compact Header: Dead-Centered Crest with Pinned Accreditation */
+  /* Compact Header: Prominent Centered Crest */
   .header-top {
-    padding: 8px 12px !important;
+    padding: 10px 12px 6px 12px !important;
   }
 
   .header-top .container > .d-flex {
     position: relative !important;
     justify-content: center !important;
     align-items: center !important;
+    min-height: 82px !important;
   }
 
   .header-top #badge {
     display: block !important;
     margin: 0 auto !important;
-    width: 54px !important;
-    height: 54px !important;
+    width: 78px !important;
+    height: 78px !important;
   }
 
   .header-top .header-logos {
