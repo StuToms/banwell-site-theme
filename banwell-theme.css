@@ -3,12 +3,12 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.2
-   Date:        14 September 2026
-   Build Notes: Maximized sponsor logo sizing (boosted height to 105px, added
-                scale(1.28) to eliminate built-in image whitespace padding);
-                clean charcoal sponsor footers; unified crimson category headers;
-                click-to-dismiss mutual exclusion; impermeable z-index header;
+   Version:     2.9.3
+   Date:        15 September 2026
+   Build Notes: Fixed button bleed-through (scoped .club-colour-bg to header/nav);
+                locked page sections to z-index: 1 stacking context;
+                executive commercial sponsor showcase cards;
+                unified crimson category headers; click-to-dismiss menu logic;
                 luxury 0.42s View Transitions; mobile accreditation pinning.
    ========================================================================== */
 
@@ -72,6 +72,14 @@ body {
   color: var(--banwell-text);
   background-color: var(--banwell-page-bg) !important;
   overflow-x: hidden;
+}
+
+/* Force standard page sections below header stacking context */
+main,
+section,
+.main-content {
+  position: relative !important;
+  z-index: 1 !important;
 }
 
 /* Headings & Display Elements (Bebas Neue) */
@@ -156,8 +164,9 @@ header,
   width: auto !important;
 }
 
-/* Main Navigation Bar Container */
-.club-colour-bg,
+/* Main Navigation Bar Container (Scoped strictly to avoid styling in-page buttons) */
+nav.club-colour-bg,
+header .club-colour-bg,
 .navbar,
 .navbar-default,
 .header-navigation {
@@ -226,19 +235,27 @@ header,
   color: var(--banwell-red) !important;
 }
 
+/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
-.btn-primary {
+.btn-primary,
+a.button.club-colour-bg,
+.button.club-colour-bg {
+  position: static !important;
+  z-index: 1 !important;
   background-color: var(--banwell-red) !important;
   border: 1px solid var(--banwell-dark-red) !important;
   color: #ffffff !important;
   text-transform: uppercase !important;
   border-radius: 4px !important;
   font-weight: 500;
+  padding: 8px 14px !important;
   transition: all 0.25s ease;
 }
 
 .border-button:hover,
-.btn-primary:hover {
+.btn-primary:hover,
+a.button.club-colour-bg:hover,
+.button.club-colour-bg:hover {
   background-color: var(--banwell-dark-red) !important;
   border-color: var(--banwell-black) !important;
   color: #ffffff !important;
@@ -280,7 +297,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   isolation: isolate !important;
 }
 
-/* Active Hover State: Only displays when NOT closed */
+/* Active Hover State: Displays when NOT marked closed */
 .navbar-nav > li:not(.bfc-closed):hover > .dropdown-menu,
 .navbar-nav > li.mega-menu:not(.bfc-closed):hover .dropdown-menu {
   opacity: 1 !important;
@@ -433,10 +450,10 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   8. CLEAN COMMERCIAL SPONSOR SHOWCASE (MAXIMIZED VISIBILITY)
+   8. EXECUTIVE SPONSOR PLAQUES (CLEAN COMMERCIAL SHOWCASE)
    ========================================================================== */
 
-/* Outer Sponsor Card Container */
+/* Outer Sponsor Plaque Container */
 .col-lg-3 .card:has(img),
 .col-lg-3 .panel:has(img),
 .col-lg-3 div[class*="sponsor"],
@@ -444,30 +461,31 @@ aside [class*="sponsor"] {
   background: #ffffff !important;
   border: 1px solid #e2e8f0 !important;
   border-top: 3px solid var(--banwell-red) !important;
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   overflow: hidden !important;
   padding: 0 !important;
   margin-bottom: 20px !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04) !important;
   text-align: center !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease !important;
 }
 
 .col-lg-3 .card:has(img):hover,
 .col-lg-3 div[class*="sponsor"]:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08) !important;
+  transform: translateY(-3px) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Inner Body Container: tight padding, dedicated vertical space */
+/* Plaque Logo Chamber */
 .col-lg-3 .card:has(img) .card-body,
 .col-lg-3 .card .card-body:has(img) {
-  padding: 14px 10px !important;
+  padding: 16px 12px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 125px !important;
-  height: 125px !important;
+  min-height: 120px !important;
+  height: 120px !important;
   background: #ffffff !important;
   overflow: hidden !important;
 }
@@ -490,16 +508,16 @@ aside [class*="sponsor"] {
   content: none !important;
 }
 
-/* Maximize Sponsor Logo Presentation */
+/* Prominent Logo Presentation */
 .col-lg-3 .card:has(img) .ratio img,
 .col-lg-3 .card:has(img) img {
   position: static !important;
-  max-height: 105px !important;
-  height: 100px !important;
-  max-width: 95% !important;
+  max-height: 96px !important;
+  height: 90px !important;
+  max-width: 92% !important;
   width: auto !important;
   object-fit: contain !important;
-  transform: scale(1.28) !important; /* Boldly scales up logos with built-in empty canvas padding */
+  transform: scale(1.22) !important;
   transform-origin: center center !important;
   margin: 0 auto !important;
   display: block !important;
@@ -508,11 +526,11 @@ aside [class*="sponsor"] {
   border: none !important;
 }
 
-/* Clean Charcoal Banner Card Footer */
+/* Subtle Plaque Footer */
 .col-lg-3 .card:has(img) .card-footer {
-  background: var(--banwell-charcoal) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-  padding: 8px 12px !important;
+  background: #f8fafc !important;
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 7px 12px !important;
   margin: 0 !important;
   border-radius: 0 !important;
 }
@@ -522,9 +540,9 @@ aside [class*="sponsor"] {
 .col-lg-3 .card:has(img) .card-footer p,
 .col-lg-3 .card:has(img) .card-footer span {
   font-family: 'Bebas Neue', sans-serif !important;
-  font-size: 14px !important;
-  letter-spacing: 1.5px !important;
-  color: #ffffff !important;
+  font-size: 13.5px !important;
+  letter-spacing: 1.2px !important;
+  color: var(--banwell-red) !important;
   margin: 0 !important;
   padding: 0 !important;
   line-height: 1.2 !important;
