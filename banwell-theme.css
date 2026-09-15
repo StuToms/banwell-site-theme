@@ -3,13 +3,12 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.3
+   Version:     2.9.4
    Date:        15 September 2026
-   Build Notes: Fixed button bleed-through (scoped .club-colour-bg to header/nav);
-                locked page sections to z-index: 1 stacking context;
-                executive commercial sponsor showcase cards;
-                unified crimson category headers; click-to-dismiss menu logic;
-                luxury 0.42s View Transitions; mobile accreditation pinning.
+   Build Notes: Added hardened .bfc-sponsor-lounge classes to eliminate WYSIWYG
+                inline-style stripping and tag separation; fixed fixtures button bleed;
+                unified crimson category headers; click-to-dismiss mutual exclusion;
+                impermeable z-index header; luxury 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -164,7 +163,7 @@ header,
   width: auto !important;
 }
 
-/* Main Navigation Bar Container (Scoped strictly to avoid styling in-page buttons) */
+/* Main Navigation Bar Container */
 nav.club-colour-bg,
 header .club-colour-bg,
 .navbar,
@@ -297,7 +296,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   isolation: isolate !important;
 }
 
-/* Active Hover State: Displays when NOT marked closed */
+/* Active Hover State */
 .navbar-nav > li:not(.bfc-closed):hover > .dropdown-menu,
 .navbar-nav > li.mega-menu:not(.bfc-closed):hover .dropdown-menu {
   opacity: 1 !important;
@@ -317,7 +316,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s !important;
 }
 
-/* Single-Column Dropdowns Sizing (Club Info, Contact) */
+/* Single-Column Dropdowns Sizing */
 .navbar-nav > li:not(.mega-menu):not(.mega-dropdown) .dropdown-menu {
   min-width: 285px !important;
   width: auto !important;
@@ -398,7 +397,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   border-left: 3px solid var(--banwell-red) !important;
 }
 
-/* Teams Mega-Menu Category Headers (All 4 in Crimson Bebas Neue) */
+/* Teams Mega-Menu Category Headers */
 .dropdown-menu [class*="col-"] h2,
 .dropdown-menu [class*="col-"] h3,
 .dropdown-menu [class*="col-"] h4,
@@ -422,7 +421,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
   vertical-align: middle !important;
 }
 
-/* Individual Team Squad Rows (Forced Clean White & Borderless) */
+/* Individual Team Squad Rows */
 .dropdown-menu [class*="col-"] a:not([href*="/team/category/"]):not([href*="/teams/adults"]):not([href*="/teams/youth"]):not([href*="/teams/girls"]):not(.stretched-link):not(.title),
 .dropdown-menu .team-menu-item a {
   display: block !important;
@@ -450,10 +449,9 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   8. EXECUTIVE SPONSOR PLAQUES (CLEAN COMMERCIAL SHOWCASE)
+   8. EXECUTIVE SPONSOR PLAQUES (SIDEBAR)
    ========================================================================== */
 
-/* Outer Sponsor Plaque Container */
 .col-lg-3 .card:has(img),
 .col-lg-3 .panel:has(img),
 .col-lg-3 div[class*="sponsor"],
@@ -477,7 +475,6 @@ aside [class*="sponsor"] {
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Plaque Logo Chamber */
 .col-lg-3 .card:has(img) .card-body,
 .col-lg-3 .card .card-body:has(img) {
   padding: 16px 12px !important;
@@ -490,7 +487,6 @@ aside [class*="sponsor"] {
   overflow: hidden !important;
 }
 
-/* Neutralize Bootstrap .ratio constraints */
 .col-lg-3 .card:has(img) .ratio,
 .col-lg-3 .ratio-contain {
   display: flex !important;
@@ -508,7 +504,6 @@ aside [class*="sponsor"] {
   content: none !important;
 }
 
-/* Prominent Logo Presentation */
 .col-lg-3 .card:has(img) .ratio img,
 .col-lg-3 .card:has(img) img {
   position: static !important;
@@ -526,7 +521,6 @@ aside [class*="sponsor"] {
   border: none !important;
 }
 
-/* Subtle Plaque Footer */
 .col-lg-3 .card:has(img) .card-footer {
   background: #f8fafc !important;
   border-top: 1px solid #e2e8f0 !important;
@@ -550,7 +544,95 @@ aside [class*="sponsor"] {
 }
 
 /* ==========================================================================
-   9. CROSS-DEVICE RESPONSIVE HARDENING & MOBILE HEADER ENHANCEMENT
+   9. IN-PAGE STADIUM SPONSOR LOUNGE (.bfc-sponsor-lounge)
+   ========================================================================== */
+
+.bfc-sponsor-lounge {
+  background: #0e1117 !important;
+  border-left: 5px solid var(--banwell-red) !important;
+  border-radius: 8px !important;
+  padding: 24px !important;
+  margin-bottom: 24px !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.bfc-sponsor-lounge-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  padding-bottom: 12px !important;
+  margin-bottom: 20px !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+.bfc-sponsor-lounge-header h3 {
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 28px !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  letter-spacing: 1px !important;
+  line-height: 1 !important;
+}
+
+.bfc-sponsor-lounge-header span {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 12px !important;
+  color: var(--banwell-red) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+}
+
+.bfc-sponsor-grid {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 18px !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+}
+
+.bfc-sponsor-plinth {
+  flex: 1 1 200px !important;
+  max-width: 320px !important;
+  min-width: 180px !important;
+  background: #ffffff !important;
+  border-radius: 6px !important;
+  height: 140px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 14px 18px !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+.bfc-sponsor-plinth:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45) !important;
+}
+
+.bfc-sponsor-plinth img {
+  max-height: 112px !important;
+  max-width: 92% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important;
+  margin: 0 auto !important;
+  border: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* ==========================================================================
+   10. CROSS-DEVICE RESPONSIVE HARDENING & MOBILE HEADER ENHANCEMENT
    ========================================================================== */
 
 /* Tablet Breakpoints (768px – 1199.98px) */
@@ -583,7 +665,6 @@ aside [class*="sponsor"] {
     padding: 10px 14px !important;
   }
 
-  /* Centered Banwell FC Crest */
   .header-top .container > .d-flex {
     position: relative !important;
     justify-content: center !important;
@@ -594,7 +675,6 @@ aside [class*="sponsor"] {
     margin: 0 auto !important;
   }
 
-  /* Show England Football 2-Star Badge Pinned to Right on Mobile */
   .header-top .header-logos {
     display: flex !important;
     position: absolute !important;
@@ -613,7 +693,6 @@ aside [class*="sponsor"] {
     display: none !important;
   }
 
-  /* 2-Column Sponsor Grid on Mobile */
   .col-lg-3 {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
@@ -631,5 +710,11 @@ aside [class*="sponsor"] {
     max-height: 70px !important;
     height: 65px !important;
     transform: scale(1.15) !important;
+  }
+
+  .bfc-sponsor-plinth {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+    height: 120px !important;
   }
 }
