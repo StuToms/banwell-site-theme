@@ -3,13 +3,14 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.9
+   Version:     2.10.0
    Date:        15 September 2026
-   Build Notes: Enlarged mobile crest to 78px with 82px container clearance;
-                desktop and tablet dimensions remain untouched; hero title
-                integrated into charcoal lounge; external CMS heading hidden;
-                hero top gap tightened; dead-centered mobile layout; in-page
-                table stacking; 0.42s View Transitions.
+   Build Notes: Mobile header perfected:
+                - Enlarged mobile crest to 96px x 96px with 104px clearance.
+                - Pinned .charter-standard absolutely to right: 10px, isolating
+                  the crest in the true horizontal center.
+                - Retains integrated hero lounge, tight navbar spacing, full
+                  sponsor plinths, table stacking, and 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -656,32 +657,49 @@ aside [class*="sponsor"] {
     padding: 0 !important;
   }
 
-  /* Compact Header: Prominent Centered Crest */
+  /* Compact Header: Bold Centered Crest & Pinned Accreditation */
   .header-top {
-    padding: 10px 12px 6px 12px !important;
+    padding: 8px 12px 6px 12px !important;
   }
 
   .header-top .container > .d-flex {
     position: relative !important;
+    display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    min-height: 82px !important;
+    min-height: 104px !important;
+    width: 100% !important;
   }
 
+  .header-top .container > .d-flex > div:first-child {
+    margin: 0 auto !important;
+    justify-content: center !important;
+  }
+
+  /* Enlarge Crest on Mobile */
   .header-top #badge {
     display: block !important;
     margin: 0 auto !important;
-    width: 78px !important;
-    height: 78px !important;
+    width: 96px !important;
+    height: 96px !important;
+    min-width: 96px !important;
+    min-height: 96px !important;
+    max-width: none !important;
+    max-height: none !important;
+    background-size: contain !important;
   }
 
-  .header-top .header-logos {
+  /* Pin Accreditation Badge to Far Right */
+  .header-top .charter-standard,
+  .header-top .header-logos,
+  .header-top [class*="charter"] {
     display: flex !important;
     position: absolute !important;
-    right: 12px !important;
+    right: 10px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     margin: 0 !important;
+    z-index: 10 !important;
   }
 
   .charter-standard img {
