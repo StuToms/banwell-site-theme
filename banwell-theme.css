@@ -3,17 +3,12 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.9.6
+   Version:     2.9.7
    Date:        15 September 2026
-   Build Notes: Full responsive cross-device release.
-                - Mobile Header: Dead-centered crest with pinned accreditation;
-                  team name suppressed to prevent viewport overcrowding.
-                - Mobile Lounge: In-page sponsor tables stack vertically into
-                  full-width touch plinths.
-                - Mobile Sidebar: Isolates Next Fixtures cards to full width while
-                  pairing sponsor plaques 2-by-2.
-                - Dropdowns: Retains bidirectional fade-and-glide with click-dismiss.
-                - Global: 0.42s View Transitions and impermeable z-index stacking.
+   Build Notes: Homepage hero vertical gap eliminated; Section 3 tightens 
+                container padding and welcome card offsets; maintains dead-centered 
+                mobile header crest; preserves full .bfc-sponsor-lounge suite and 
+                table-stacking responsiveness; 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -86,7 +81,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE RESTORATION --- */
+/* --- 3. HOMEPAGE HERO IMAGE & GAP REDUCTION --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -110,6 +105,25 @@ section.position-relative {
 section.position-relative .container {
   position: relative !important;
   z-index: 2 !important;
+}
+
+/* Tighten spacing between navigation bar and Welcome Card */
+section.position-relative .container.py-5.py-lg-7,
+section.position-relative .container {
+  padding-top: 24px !important;
+}
+
+.welcome-card,
+.welcome-card .card-body {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.welcome-card h1.club-colour-border-bottom {
+  margin-top: 0 !important;
 }
 
 /* --- 4. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
