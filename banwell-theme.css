@@ -3,14 +3,14 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.0
+   Version:     2.10.1
    Date:        15 September 2026
-   Build Notes: Mobile header perfected:
-                - Enlarged mobile crest to 96px x 96px with 104px clearance.
-                - Pinned .charter-standard absolutely to right: 10px, isolating
-                  the crest in the true horizontal center.
-                - Retains integrated hero lounge, tight navbar spacing, full
-                  sponsor plinths, table stacking, and 0.42s View Transitions.
+   Build Notes: Hero CTA buttons optimized:
+                - Desktop: Symmetrical min-width (210px) with centered flex alignment.
+                - Mobile: Full-width (100%) stacked touch targets eliminating ragged edges.
+                - Hardened with attribute selectors to survive WYSIWYG class-stripping.
+                - Retains 96px mobile crest, pinned accreditation badge, in-page
+                  sponsor plinth suite with table stacking, and 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -242,6 +242,7 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
+/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -264,6 +265,63 @@ a.button.club-colour-bg:hover,
 .button.club-colour-bg:hover {
   background-color: var(--banwell-dark-red) !important;
   border-color: var(--banwell-black) !important;
+  color: #ffffff !important;
+}
+
+/* Homepage Hero Action Buttons (Desktop Styling) */
+.bfc-hero-actions,
+div[style*="rgba(12, 12, 12"] > div:has(a[href*="visiting-teams"]) {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+.bfc-btn,
+div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"],
+div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 210px !important;
+  height: 46px !important;
+  padding: 0 20px !important;
+  box-sizing: border-box !important;
+  font-family: 'Bebas Neue', sans-serif !important;
+  font-size: 19px !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  text-align: center !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.bfc-btn-primary,
+div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
+  background-color: var(--banwell-red) !important;
+  border: 1px solid var(--banwell-dark-red) !important;
+  color: #ffffff !important;
+}
+
+.bfc-btn-primary:hover,
+div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"]:hover {
+  background-color: var(--banwell-dark-red) !important;
+  border-color: var(--banwell-black) !important;
+  color: #ffffff !important;
+}
+
+.bfc-btn-secondary,
+div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"] {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.bfc-btn-secondary:hover,
+div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"]:hover {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
   color: #ffffff !important;
 }
 
@@ -717,6 +775,28 @@ aside [class*="sponsor"] {
     font-size: 32px !important;
     line-height: 1.05 !important;
     margin-bottom: 10px !important;
+  }
+
+  /* Mobile Full-Width Stacked Hero CTA Buttons */
+  .bfc-hero-actions,
+  div[style*="rgba(12, 12, 12"] > div:has(a[href*="visiting-teams"]) {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .bfc-btn,
+  div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"],
+  div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
+    display: flex !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    height: 48px !important;
+    font-size: 20px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
   }
 
   /* Sidebar Grid: Isolates Fixtures full-width, pairs sponsors 2-by-2 */
