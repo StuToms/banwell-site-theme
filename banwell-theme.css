@@ -3,14 +3,16 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.8
+   Version:     2.10.9
    Date:        29 September 2026
-   Build Notes: Skyscraper Bleed Eradication & Strict Layout Anchoring:
-                - Outer .bfc-curator-card locked to 550px max-height to physically
-                  prevent Curator from pushing the page down by thousands of pixels.
-                - Hard height clamps on .crt-feed-carousel, .crt-post, and .crt-post-content.
-                - 3 Feature cards locked into a permanent 3-column row above feed.
-                - 1060px master container fills desktop width with natural pitch framing.
+   Build Notes: Technical Code Hardening & Box-Model Audit:
+                - Fixed Curator box-model clipping: expanded card clearance to 
+                  prevent bottom-edge navigation cropping.
+                - Hardened CTA attribute selectors against CMS space-stripping 
+                  inside rgba() color definitions.
+                - Cleaned CSS syntax: removed invalid content:"" on HTML tags;
+                  eliminated redundant background/border property declarations.
+                - Added < 380px mobile safety clamp to prevent header badge collision.
                 - Retains 96px mobile crest, pinned accreditation badge, full
                   sponsor plinths with table stacking, and 0.42s View Transitions.
    ========================================================================== */
@@ -119,10 +121,8 @@ section.position-relative .container {
 
 .welcome-card,
 .welcome-card .card-body {
-  padding-top: 0 !important;
+  padding: 0 !important;
   margin-top: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -144,18 +144,21 @@ section.position-relative .container {
 
 /* --- 4. CURATOR.IO RIGID HEIGHT LOCK & OVERFLOW CLIPPING --- */
 .bfc-curator-card {
-  max-height: 550px !important;
-  height: 550px !important;
+  height: auto !important;
+  min-height: 520px !important;
+  max-height: 575px !important;
   overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 #curator-feed-default-feed-layout {
   width: 100% !important;
   max-width: 100% !important;
-  height: 470px !important;
-  max-height: 470px !important;
+  height: 465px !important;
+  max-height: 465px !important;
   overflow: hidden !important;
   display: block !important;
+  position: relative !important;
 }
 
 #curator-feed-default-feed-layout .crt-feed-carousel,
@@ -163,8 +166,8 @@ section.position-relative .container {
 #curator-feed-default-feed-layout .crt-feed-container {
   width: 100% !important;
   max-width: 100% !important;
-  height: 460px !important;
-  max-height: 460px !important;
+  height: 455px !important;
+  max-height: 455px !important;
   margin: 0 auto !important;
   overflow: hidden !important;
 }
@@ -175,8 +178,8 @@ section.position-relative .container {
 #curator-feed-default-feed-layout .crt-post-border {
   min-width: 300px !important;
   max-width: 340px !important;
-  height: 440px !important;
-  max-height: 440px !important;
+  height: 435px !important;
+  max-height: 435px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   display: flex !important;
@@ -204,12 +207,12 @@ section.position-relative .container {
 #curator-feed-default-feed-layout .crt-post-content,
 #curator-feed-default-feed-layout .crt-post-body {
   flex: 1 1 auto !important;
-  max-height: 190px !important;
+  max-height: 185px !important;
   overflow: hidden !important;
   padding: 10px 14px !important;
 }
 
-/* Strict text truncation for long Facebook reports */
+/* Strict text truncation for long match reports */
 #curator-feed-default-feed-layout .crt-post-text,
 #curator-feed-default-feed-layout .crt-post-c-text,
 #curator-feed-default-feed-layout [class*="crt-post-text"],
@@ -226,6 +229,16 @@ section.position-relative .container {
   font-size: 13px !important;
 }
 
+/* Navigation Arrow Visibility & Protection */
+#curator-feed-default-feed-layout .crt-feed-carousel-prev,
+#curator-feed-default-feed-layout .crt-feed-carousel-next,
+#curator-feed-default-feed-layout .crt-carousel-prev,
+#curator-feed-default-feed-layout .crt-carousel-next {
+  z-index: 50 !important;
+  opacity: 0.9 !important;
+  pointer-events: auto !important;
+}
+
 /* --- 5. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
 header,
 #header,
@@ -235,7 +248,6 @@ header,
   z-index: 9999999 !important;
   background-color: var(--banwell-black) !important;
   border: none !important;
-  border-bottom: none !important;
   box-shadow: none !important;
   padding: 12px 0 0 0 !important;
 }
@@ -243,7 +255,6 @@ header,
 .header-top {
   background-color: var(--banwell-black) !important;
   border: none !important;
-  border-bottom: none !important;
   padding-bottom: 12px !important;
 }
 
@@ -258,8 +269,7 @@ header,
 }
 
 #badge {
-  background: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984804309-43926/0/thumbnail_CustomPageImage.jpg') center / contain no-repeat !important;
-  background-color: transparent !important;
+  background: url('https://myclubpro.blob.core.windows.net/images/ClubInfoPageImages/151778/966/1788984804309-43926/0/thumbnail_CustomPageImage.jpg') center / contain no-repeat transparent !important;
 }
 
 .charter-standard img {
@@ -285,7 +295,6 @@ header .club-colour-bg,
 .navbar-nav > li.dropdown,
 .navbar-nav > li.open {
   background: transparent !important;
-  background-color: transparent !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
@@ -337,7 +346,7 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
-/* Standard Buttons & "View All Fixtures" Reset */
+/* Standard CMS Buttons Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -363,9 +372,10 @@ a.button.club-colour-bg:hover,
   color: #ffffff !important;
 }
 
-/* Homepage Hero Action Buttons (Desktop Styling) */
+/* Homepage Hero Symmetrical Action Buttons */
 .bfc-hero-actions,
-div[style*="rgba(12, 12, 12"] > div:has(a[href*="visiting-teams"]) {
+div[style*="12, 12, 12"] > div:has(a[href*="visiting-teams"]),
+div[style*="12,12,12"] > div:has(a[href*="visiting-teams"]) {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 12px !important;
@@ -373,8 +383,10 @@ div[style*="rgba(12, 12, 12"] > div:has(a[href*="visiting-teams"]) {
 }
 
 .bfc-btn,
-div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"],
-div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
+div[style*="12, 12, 12"] a[href*="visiting-teams"],
+div[style*="12,12,12"] a[href*="visiting-teams"],
+div[style*="12, 12, 12"] a[href*="mailto:secretary"],
+div[style*="12,12,12"] a[href*="mailto:secretary"] {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -393,28 +405,32 @@ div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
 }
 
 .bfc-btn-primary,
-div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
+div[style*="12, 12, 12"] a[href*="mailto:secretary"],
+div[style*="12,12,12"] a[href*="mailto:secretary"] {
   background-color: var(--banwell-red) !important;
   border: 1px solid var(--banwell-dark-red) !important;
   color: #ffffff !important;
 }
 
 .bfc-btn-primary:hover,
-div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"]:hover {
+div[style*="12, 12, 12"] a[href*="mailto:secretary"]:hover,
+div[style*="12,12,12"] a[href*="mailto:secretary"]:hover {
   background-color: var(--banwell-dark-red) !important;
   border-color: var(--banwell-black) !important;
   color: #ffffff !important;
 }
 
 .bfc-btn-secondary,
-div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"] {
+div[style*="12, 12, 12"] a[href*="visiting-teams"],
+div[style*="12,12,12"] a[href*="visiting-teams"] {
   background-color: rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
   color: #ffffff !important;
 }
 
 .bfc-btn-secondary:hover,
-div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"]:hover {
+div[style*="12, 12, 12"] a[href*="visiting-teams"]:hover,
+div[style*="12,12,12"] a[href*="visiting-teams"]:hover {
   background-color: rgba(255, 255, 255, 0.16) !important;
   border-color: rgba(255, 255, 255, 0.5) !important;
   color: #ffffff !important;
@@ -437,7 +453,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
   top: 100% !important;
   z-index: 10000000 !important;
   background: var(--banwell-charcoal) !important;
-  background-color: var(--banwell-charcoal) !important;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
   border-top: 3px solid var(--banwell-red) !important;
   border-radius: 0 0 6px 6px !important;
@@ -504,8 +519,12 @@ div[class*="report"]:has(a[href*="/match-report"]),
   background: transparent !important;
 }
 
+/* Eradicate CMS Icon Chevrons cleanly */
 .dropdown-menu *::before,
-.dropdown-menu *::after,
+.dropdown-menu *::after {
+  content: none !important;
+}
+
 .dropdown-menu i,
 .dropdown-menu svg,
 .dropdown-menu [class*="fa"],
@@ -516,7 +535,6 @@ div[class*="report"]:has(a[href*="/match-report"]),
 .dropdown-menu [class*="col-"] h4 + a,
 .dropdown-menu [class*="col-"] .title + a {
   display: none !important;
-  content: "" !important;
 }
 
 .dropdown-menu a,
@@ -630,8 +648,8 @@ aside [class*="sponsor"] {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 120px !important;
   height: 120px !important;
+  min-height: 120px !important;
   background: #ffffff !important;
   overflow: hidden !important;
 }
@@ -882,7 +900,8 @@ aside [class*="sponsor"] {
 
   /* Mobile Full-Width Stacked Hero CTA Buttons */
   .bfc-hero-actions,
-  div[style*="rgba(12, 12, 12"] > div:has(a[href*="visiting-teams"]) {
+  div[style*="12, 12, 12"] > div:has(a[href*="visiting-teams"]),
+  div[style*="12,12,12"] > div:has(a[href*="visiting-teams"]) {
     display: flex !important;
     flex-direction: column !important;
     width: 100% !important;
@@ -890,8 +909,10 @@ aside [class*="sponsor"] {
   }
 
   .bfc-btn,
-  div[style*="rgba(12, 12, 12"] a[href*="visiting-teams"],
-  div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
+  div[style*="12, 12, 12"] a[href*="visiting-teams"],
+  div[style*="12,12,12"] a[href*="visiting-teams"],
+  div[style*="12, 12, 12"] a[href*="mailto:secretary"],
+  div[style*="12,12,12"] a[href*="mailto:secretary"] {
     display: flex !important;
     width: 100% !important;
     min-width: 100% !important;
@@ -910,7 +931,8 @@ aside [class*="sponsor"] {
 
   /* Mobile Carousel Slide Sizing */
   #curator-feed-default-feed-layout .crt-post,
-  #curator-feed-default-feed-layout .crt-post-c {
+  #curator-feed-default-feed-layout .crt-post-c,
+  #curator-feed-default-feed-layout .crt-post-border {
     min-width: 260px !important;
     max-width: 85vw !important;
   }
@@ -984,5 +1006,19 @@ aside [class*="sponsor"] {
     width: 100% !important;
     text-align: left !important;
     padding-bottom: 2px !important;
+  }
+}
+
+/* Ultra-Compact Handheld Protection (< 380px) */
+@media (max-width: 379.98px) {
+  .header-top #badge {
+    width: 82px !important;
+    height: 82px !important;
+    min-width: 82px !important;
+    min-height: 82px !important;
+  }
+
+  .charter-standard img {
+    height: 34px !important;
   }
 }
