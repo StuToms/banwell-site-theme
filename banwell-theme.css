@@ -3,12 +3,13 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.2
+   Version:     2.10.3
    Date:        29 September 2026
-   Build Notes: Desktop Split Layout & Curator Carousel Stabilization:
+   Build Notes: Curator Free-Tier Hardening & 2-Column Split Support:
+                - Clamps post captions to 4 lines via CSS (-webkit-line-clamp),
+                  eliminating vertical page jumping without a Curator Pro plan.
+                - Locks carousel cards to a uniform 490px height with 250px media frames.
                 - Desktop (>= 992px): 2-column layout (58% Left Content / 42% Live Feed).
-                - Curator Stabilization: Clamps post text and locks card heights to
-                  eliminate vertical jumpiness when long match reports load.
                 - Mobile (< 992px): Clean single-column stack with full touch targets.
                 - Retains 96px mobile crest, pinned accreditation badge, full
                   sponsor plinths, and 0.42s View Transitions.
@@ -142,21 +143,59 @@ section.position-relative .container {
   }
 }
 
-/* --- 4. CURATOR.IO CAROUSEL STABILIZATION --- */
-#curator-feed-default-feed-layout .crt-feed-carousel {
-  margin: 0 auto !important;
+/* --- 4. CURATOR.IO FREE-PLAN TRUNCATION & CAROUSEL LOCK --- */
+#curator-feed-default-feed-layout {
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
-/* Clamp maximum post card height to prevent layout stretching */
-#curator-feed-default-feed-layout .crt-post {
-  max-height: 520px !important;
+#curator-feed-default-feed-layout .crt-feed-carousel,
+#curator-feed-default-feed-layout .crt-feed-carousel-window {
+  margin: 0 auto !important;
+  overflow: hidden !important;
+}
+
+/* Strict height lock on every carousel post card */
+#curator-feed-default-feed-layout .crt-post,
+#curator-feed-default-feed-layout .crt-post-c {
+  max-height: 490px !important;
+  height: 490px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
-/* Clamp long post captions to 4 lines with ellipsis */
+/* Media frame stabilization */
+#curator-feed-default-feed-layout .crt-post-media {
+  height: 250px !important;
+  max-height: 250px !important;
+  min-height: 250px !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+#curator-feed-default-feed-layout .crt-post-media img,
+#curator-feed-default-feed-layout .crt-post-media video {
+  height: 100% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Caption container */
+#curator-feed-default-feed-layout .crt-post-content,
+#curator-feed-default-feed-layout .crt-post-body {
+  flex: 1 1 auto !important;
+  overflow: hidden !important;
+  padding: 12px 14px !important;
+}
+
+/* Force 4-line text truncation (replicates Pro Plan feature for free) */
 #curator-feed-default-feed-layout .crt-post-text,
-#curator-feed-default-feed-layout .crt-post-c-text {
+#curator-feed-default-feed-layout .crt-post-c-text,
+#curator-feed-default-feed-layout [class*="crt-post-text"],
+#curator-feed-default-feed-layout .crt-post-desc {
   display: -webkit-box !important;
   -webkit-line-clamp: 4 !important;
   -webkit-box-orient: vertical !important;
@@ -164,13 +203,9 @@ section.position-relative .container {
   text-overflow: ellipsis !important;
   line-height: 1.4 !important;
   max-height: 5.6em !important;
-}
-
-/* Prevent image blow-outs inside the carousel card */
-#curator-feed-default-feed-layout .crt-post-media img {
-  max-height: 280px !important;
-  object-fit: cover !important;
-  width: 100% !important;
+  margin-bottom: 0 !important;
+  color: #334155 !important;
+  font-size: 13px !important;
 }
 
 /* --- 5. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
@@ -284,6 +319,7 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
+/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -809,6 +845,13 @@ aside [class*="sponsor"] {
   #team-name,
   .header-top .d-none.d-sm-flex {
     display: none !important;
+  }
+
+  /* Responsive In-Card Hero Typography */
+  .bfc-home-container h1 {
+    font-size: 32px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 10px !important;
   }
 
   /* Mobile Full-Width Stacked Hero CTA Buttons */
