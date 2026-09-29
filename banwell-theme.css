@@ -3,18 +3,18 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.11.2
+   Version:     2.12.0
    Date:        29 September 2026
-   Build Notes: Ghost Column Elimination & Rigid Desktop 2-Column Split:
-                - Suppresses MyClubPro's native right-hand spacer column via
-                  .row:has(.bfc-home-grid) > [class*="col-"]:not(:has(.bfc-home-grid)).
-                - Forces content container to full 100% width (1380px max-width).
-                - Desktop (>= 992px): Left Column (~760px) holds Hero + 3 Cards;
-                  Right Column (~460px) holds stabilized Curator Social Feed.
-                - Hard height clamps eliminate the 3,000px skyscraper page stretch.
-                - Mobile (< 992px): Clean single-column stack (Hero -> Cards -> Feed).
-                - Retains 96px mobile crest, pinned accreditation badge, full
-                  sponsor plinths with table stacking, and 0.42s View Transitions.
+   Build Notes: Option A Architecture — Full-Width Stadium Matchday Suite:
+                - Suppresses MyClubPro ghost columns; centers full layout at 1080px.
+                - Charcoal hero lounge sits proud on top with symmetrical buttons.
+                - 3 Feature cards locked in a generous 3-column row across the middle.
+                - Curator carousel anchored in a full-width lower card: shows 3 clean,
+                  readable cards side-by-side with hard height locks and 4-line
+                  CSS text clamping to permanently eliminate skyscraper stretching.
+                - Mobile (< 768px): 96px centered crest, pinned accreditation badge,
+                  full-width stacked buttons, and touch-optimized card stacking.
+                - Retains all forensic tracing, sponsor plinths, and 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE & GHOST COLUMN ELIMINATION --- */
+/* --- 3. HOMEPAGE HERO IMAGE & CONTAINER ALIGNMENT --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -109,20 +109,20 @@ section.position-relative {
 section.position-relative .container {
   position: relative !important;
   z-index: 2 !important;
-  max-width: 1380px !important;
+  max-width: 1140px !important;
   width: 95% !important;
   padding-top: 18px !important;
 }
 
-/* 1. Hide MyClubPro's empty right-hand ghost spacer column */
-.row:has(.bfc-home-grid) > [class*="col-"]:not(:has(.bfc-home-grid)) {
+/* Suppress MyClubPro's right-hand ghost column */
+.row:has(.bfc-home-container) > [class*="col-"]:not(:has(.bfc-home-container)) {
   display: none !important;
 }
 
-/* 2. Force content column and cards to seize full 100% row width */
-.row:has(.bfc-home-grid) > [class*="col-"]:has(.bfc-home-grid),
-.welcome-card:has(.bfc-home-grid),
-.welcome-card:has(.bfc-home-grid) .card-body {
+/* Force container column and CMS wrapper to 100% width */
+.row:has(.bfc-home-container) > [class*="col-"]:has(.bfc-home-container),
+.welcome-card:has(.bfc-home-container),
+.welcome-card:has(.bfc-home-container) .card-body {
   width: 100% !important;
   max-width: 100% !important;
   flex: 0 0 100% !important;
@@ -140,68 +140,49 @@ section.position-relative .container {
   display: none !important;
 }
 
-/* Desktop 2-Column Split: Left Information (58%) & Right Social Feed (42%) */
-@media (min-width: 992px) {
-  .bfc-home-grid {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr) !important;
-    gap: 24px !important;
-    align-items: start !important;
-  }
-
-  .bfc-home-info-col {
-    min-width: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 16px !important;
-  }
-
-  .bfc-home-feed-col {
-    min-width: 0 !important;
-    overflow: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    max-height: 520px !important;
-    box-sizing: border-box !important;
-  }
-
-  .bfc-home-cards {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 12px !important;
-  }
+/* 3 Lower Cards: Locked 3-Column Desktop Row */
+.bfc-home-cards {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 14px !important;
 }
 
-/* --- 4. CURATOR.IO CONTROLLED CAROUSEL (RIGHT COLUMN) --- */
-.bfc-home-feed-col #curator-feed-default-feed-layout {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: 440px !important;
-  max-height: 440px !important;
+/* --- 4. CURATOR.IO FULL-WIDTH STABILIZED CAROUSEL --- */
+.bfc-curator-card {
+  max-height: 560px !important;
   overflow: hidden !important;
-  min-width: 0 !important;
-  display: block !important;
+  box-sizing: border-box !important;
 }
 
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-carousel,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-carousel-window,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-container {
+#curator-feed-default-feed-layout {
   width: 100% !important;
   max-width: 100% !important;
-  height: 430px !important;
-  max-height: 430px !important;
+  height: 465px !important;
+  max-height: 465px !important;
+  overflow: hidden !important;
+  display: block !important;
+  position: relative !important;
+}
+
+#curator-feed-default-feed-layout .crt-feed-carousel,
+#curator-feed-default-feed-layout .crt-feed-carousel-window,
+#curator-feed-default-feed-layout .crt-feed-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 455px !important;
+  max-height: 455px !important;
   margin: 0 auto !important;
   overflow: hidden !important;
 }
 
-/* Card sizing inside the wider container */
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-c,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-border {
-  min-width: 280px !important;
-  max-width: 320px !important;
-  height: 420px !important;
-  max-height: 420px !important;
+/* Individual card constraints: exactly 3 cards fit across 1080px */
+#curator-feed-default-feed-layout .crt-post,
+#curator-feed-default-feed-layout .crt-post-c,
+#curator-feed-default-feed-layout .crt-post-border {
+  min-width: 300px !important;
+  max-width: 335px !important;
+  height: 435px !important;
+  max-height: 435px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   display: flex !important;
@@ -209,7 +190,7 @@ section.position-relative .container {
 }
 
 /* Media frame */
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-media {
+#curator-feed-default-feed-layout .crt-post-media {
   height: 220px !important;
   max-height: 220px !important;
   min-height: 220px !important;
@@ -217,45 +198,44 @@ section.position-relative .container {
   flex-shrink: 0 !important;
 }
 
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-media img,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-media video {
+#curator-feed-default-feed-layout .crt-post-media img,
+#curator-feed-default-feed-layout .crt-post-media video {
   height: 100% !important;
   width: 100% !important;
   object-fit: cover !important;
   display: block !important;
 }
 
-/* Text body padding and height constraint */
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-content,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-body {
+/* Content padding and text clamping */
+#curator-feed-default-feed-layout .crt-post-content,
+#curator-feed-default-feed-layout .crt-post-body {
   flex: 1 1 auto !important;
-  max-height: 180px !important;
+  max-height: 185px !important;
   overflow: hidden !important;
   padding: 10px 14px !important;
 }
 
-/* 4-Line text truncation */
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-text,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-c-text,
-.bfc-home-feed-col #curator-feed-default-feed-layout [class*="crt-post-text"],
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-desc {
-  max-height: 70px !important;
+#curator-feed-default-feed-layout .crt-post-text,
+#curator-feed-default-feed-layout .crt-post-c-text,
+#curator-feed-default-feed-layout [class*="crt-post-text"],
+#curator-feed-default-feed-layout .crt-post-desc {
+  max-height: 72px !important;
   overflow: hidden !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 4 !important;
   -webkit-box-orient: vertical !important;
   text-overflow: ellipsis !important;
-  line-height: 1.35 !important;
+  line-height: 1.4 !important;
   margin-bottom: 0 !important;
   color: #334155 !important;
-  font-size: 12.5px !important;
+  font-size: 13px !important;
 }
 
-/* Navigation Arrow Visibility */
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-carousel-prev,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-carousel-next,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-carousel-prev,
-.bfc-home-feed-col #curator-feed-default-feed-layout .crt-carousel-next {
+/* Carousel Arrow Controls */
+#curator-feed-default-feed-layout .crt-feed-carousel-prev,
+#curator-feed-default-feed-layout .crt-feed-carousel-next,
+#curator-feed-default-feed-layout .crt-carousel-prev,
+#curator-feed-default-feed-layout .crt-carousel-next {
   z-index: 50 !important;
   opacity: 0.9 !important;
   pointer-events: auto !important;
@@ -412,12 +392,12 @@ div[style*="12,12,12"] a[href*="mailto:secretary"] {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-width: 200px !important;
-  height: 44px !important;
-  padding: 0 18px !important;
+  min-width: 210px !important;
+  height: 46px !important;
+  padding: 0 20px !important;
   box-sizing: border-box !important;
   font-family: 'Bebas Neue', sans-serif !important;
-  font-size: 18px !important;
+  font-size: 19px !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
   text-decoration: none !important;
@@ -843,23 +823,11 @@ aside [class*="sponsor"] {
   }
 }
 
-/* Medium Breakpoints: Collapse 2-Column Desktop Grid to Vertical Stack */
+/* Tablet: Feature Cards Column Wrap */
 @media (max-width: 991.98px) {
-  .bfc-home-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 18px !important;
-  }
-
   .bfc-home-cards {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
     gap: 12px !important;
-  }
-
-  .bfc-home-feed-col {
-    width: 100% !important;
-    max-height: none !important;
-    height: auto !important;
   }
 }
 
@@ -925,7 +893,7 @@ aside [class*="sponsor"] {
   }
 
   /* Mobile In-Card Hero Typography */
-  .bfc-home-info-col h1 {
+  .bfc-home-container h1 {
     font-size: 32px !important;
     line-height: 1.05 !important;
     margin-bottom: 10px !important;
@@ -963,9 +931,9 @@ aside [class*="sponsor"] {
   }
 
   /* Mobile Carousel Slide Sizing */
-  .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post,
-  .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-c,
-  .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-border {
+  #curator-feed-default-feed-layout .crt-post,
+  #curator-feed-default-feed-layout .crt-post-c,
+  #curator-feed-default-feed-layout .crt-post-border {
     min-width: 260px !important;
     max-width: 85vw !important;
   }
