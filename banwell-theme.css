@@ -3,15 +3,15 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.7
+   Version:     2.10.8
    Date:        29 September 2026
-   Build Notes: Layout Restored & Curator Bleed Eradicated:
-                - Container expanded to 1060px, perfectly balanced over pitch.
-                - 3 Feature cards locked in strict 3-column row above feed.
-                - Curator feed locked into full-width card below with overflow hidden;
-                  posts restricted to 320px width and clamped to 4 lines, preventing
-                  page expansion or infinite column spawning.
-                - Retains 96px mobile crest, pinned accreditation badge, in-page
+   Build Notes: Skyscraper Bleed Eradication & Strict Layout Anchoring:
+                - Outer .bfc-curator-card locked to 550px max-height to physically
+                  prevent Curator from pushing the page down by thousands of pixels.
+                - Hard height clamps on .crt-feed-carousel, .crt-post, and .crt-post-content.
+                - 3 Feature cards locked into a permanent 3-column row above feed.
+                - 1060px master container fills desktop width with natural pitch framing.
+                - Retains 96px mobile crest, pinned accreditation badge, full
                   sponsor plinths with table stacking, and 0.42s View Transitions.
    ========================================================================== */
 
@@ -142,13 +142,20 @@ section.position-relative .container {
   gap: 14px !important;
 }
 
-/* --- 4. STRICT CURATOR.IO OVERFLOW CONTAINMENT --- */
+/* --- 4. CURATOR.IO RIGID HEIGHT LOCK & OVERFLOW CLIPPING --- */
+.bfc-curator-card {
+  max-height: 550px !important;
+  height: 550px !important;
+  overflow: hidden !important;
+}
+
 #curator-feed-default-feed-layout {
   width: 100% !important;
   max-width: 100% !important;
+  height: 470px !important;
+  max-height: 470px !important;
   overflow: hidden !important;
   display: block !important;
-  box-sizing: border-box !important;
 }
 
 #curator-feed-default-feed-layout .crt-feed-carousel,
@@ -156,17 +163,20 @@ section.position-relative .container {
 #curator-feed-default-feed-layout .crt-feed-container {
   width: 100% !important;
   max-width: 100% !important;
+  height: 460px !important;
+  max-height: 460px !important;
   margin: 0 auto !important;
   overflow: hidden !important;
 }
 
-/* Constrain individual cards */
+/* Hard height lock on every carousel card slide */
 #curator-feed-default-feed-layout .crt-post,
-#curator-feed-default-feed-layout .crt-post-c {
+#curator-feed-default-feed-layout .crt-post-c,
+#curator-feed-default-feed-layout .crt-post-border {
   min-width: 300px !important;
   max-width: 340px !important;
-  height: 480px !important;
-  max-height: 480px !important;
+  height: 440px !important;
+  max-height: 440px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   display: flex !important;
@@ -175,9 +185,9 @@ section.position-relative .container {
 
 /* Media frame */
 #curator-feed-default-feed-layout .crt-post-media {
-  height: 240px !important;
-  max-height: 240px !important;
-  min-height: 240px !important;
+  height: 220px !important;
+  max-height: 220px !important;
+  min-height: 220px !important;
   overflow: hidden !important;
   flex-shrink: 0 !important;
 }
@@ -190,26 +200,27 @@ section.position-relative .container {
   display: block !important;
 }
 
-/* Content padding */
+/* Text body padding and height constraint */
 #curator-feed-default-feed-layout .crt-post-content,
 #curator-feed-default-feed-layout .crt-post-body {
   flex: 1 1 auto !important;
+  max-height: 190px !important;
   overflow: hidden !important;
-  padding: 12px 14px !important;
+  padding: 10px 14px !important;
 }
 
-/* 4-Line text clamping */
+/* Strict text truncation for long Facebook reports */
 #curator-feed-default-feed-layout .crt-post-text,
 #curator-feed-default-feed-layout .crt-post-c-text,
 #curator-feed-default-feed-layout [class*="crt-post-text"],
 #curator-feed-default-feed-layout .crt-post-desc {
+  max-height: 72px !important;
+  overflow: hidden !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 4 !important;
   -webkit-box-orient: vertical !important;
-  overflow: hidden !important;
   text-overflow: ellipsis !important;
   line-height: 1.4 !important;
-  max-height: 5.6em !important;
   margin-bottom: 0 !important;
   color: #334155 !important;
   font-size: 13px !important;
@@ -419,7 +430,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 
 /* ==========================================================================
    7. BIDIRECTIONAL DROPDOWNS & MUTUAL EXCLUSION HOVER CONTROLS
-   ========================================================================= */
+   ========================================================================== */
 
 .dropdown-menu {
   position: absolute !important;
