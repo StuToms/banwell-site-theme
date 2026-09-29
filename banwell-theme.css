@@ -3,17 +3,17 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.5
+   Version:     2.10.6
    Date:        29 September 2026
-   Build Notes: Desktop Split Layout & Curator Carousel Stabilization:
-                - Desktop (>= 992px): 2-column split (Left: Hero + 3 horizontal cards;
-                  Right: Social Feed).
-                - 3 Lower Cards locked to repeat(3, 1fr) to prevent vertical wrapping.
-                - Right column constrained so carousel displays 1 clean post at a time.
-                - Free-tier caption clamping (-webkit-line-clamp: 4) stops vertical jumps.
-                - Mobile (< 992px): Stacks into an accessible single column.
-                - Retains 96px mobile crest, pinned accreditation badge, full
-                  sponsor plinths, and 0.42s View Transitions.
+   Build Notes: Perfected Split Layout Architecture:
+                - Top Row (>= 992px): 2-column split (Hero Lounge 58% / Social Feed 42%).
+                - Bottom Row: 3 Feature cards span full 100% width across the bottom,
+                  restoring generous ~400px columns and eliminating narrow text ribbons.
+                - Curator Carousel locked to right-hand card with 4-line text clamping
+                  and uniform media frames, preventing vertical jumps without Pro tier.
+                - Mobile (< 992px): Smooth single-column stack with full touch accessibility.
+                - Retains 96px mobile crest, pinned accreditation badge, in-page
+                  sponsor plinths with table stacking, and 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -84,7 +84,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE & 2-COLUMN DESKTOP ARCHITECTURE --- */
+/* --- 3. HOMEPAGE HERO IMAGE & BALANCED CONTAINER --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -136,61 +136,62 @@ section.position-relative .container {
   display: none !important;
 }
 
-/* Desktop 2-Column Split: Left Side (Hero + Cards) & Right Side (Feed) */
+/* Desktop 2-Column Top Row & Full-Width 3-Card Bottom Row */
 @media (min-width: 992px) {
-  .bfc-home-grid {
+  .bfc-home-top-row {
     display: grid !important;
-    grid-template-columns: minmax(0, 1.85fr) minmax(350px, 1.05fr) !important;
-    gap: 22px !important;
-    align-items: start !important;
+    grid-template-columns: minmax(0, 1.4fr) minmax(360px, 1fr) !important;
+    gap: 20px !important;
+    align-items: stretch !important;
   }
 
-  .bfc-home-cards {
+  .bfc-home-cards-row {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 14px !important;
+    gap: 16px !important;
+    width: 100% !important;
   }
 }
 
-/* --- 4. CURATOR.IO EMBED CONTAINMENT (RIGHT COLUMN) --- */
-.bfc-home-feed #curator-feed-default-feed-layout {
+/* --- 4. CURATOR.IO CONTROLLED CAROUSEL CONTAINMENT --- */
+.bfc-home-feed-card #curator-feed-default-feed-layout {
   width: 100% !important;
   max-width: 100% !important;
   overflow: hidden !important;
 }
 
-.bfc-home-feed #curator-feed-default-feed-layout .crt-feed-carousel,
-.bfc-home-feed #curator-feed-default-feed-layout .crt-feed-carousel-window {
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-feed-carousel,
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-feed-carousel-window {
   width: 100% !important;
   margin: 0 auto !important;
   overflow: hidden !important;
 }
 
-/* Constrain slides so only 1 readable post shows in the right column */
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post,
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-c {
+/* Post slide dimension lock */
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post,
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-c {
   width: 100% !important;
   min-width: 100% !important;
   max-width: 100% !important;
-  height: 520px !important;
-  max-height: 520px !important;
+  height: 480px !important;
+  max-height: 480px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
 }
 
-/* Media frame */
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-media {
-  height: 270px !important;
-  max-height: 270px !important;
-  min-height: 270px !important;
+/* Uniform media frame */
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-media {
+  height: 240px !important;
+  max-height: 240px !important;
+  min-height: 240px !important;
   overflow: hidden !important;
   flex-shrink: 0 !important;
 }
 
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-media img,
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-media video {
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-media img,
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-media video {
   height: 100% !important;
   width: 100% !important;
   object-fit: cover !important;
@@ -198,18 +199,18 @@ section.position-relative .container {
 }
 
 /* Content padding */
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-content,
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-body {
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-content,
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-body {
   flex: 1 1 auto !important;
   overflow: hidden !important;
   padding: 12px 14px !important;
 }
 
-/* Text clamping */
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-text,
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-c-text,
-.bfc-home-feed #curator-feed-default-feed-layout [class*="crt-post-text"],
-.bfc-home-feed #curator-feed-default-feed-layout .crt-post-desc {
+/* 4-Line text clamping (replaces Pro Plan character truncation) */
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-text,
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-c-text,
+.bfc-home-feed-card #curator-feed-default-feed-layout [class*="crt-post-text"],
+.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-desc {
   display: -webkit-box !important;
   -webkit-line-clamp: 4 !important;
   -webkit-box-orient: vertical !important;
@@ -333,6 +334,7 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
+/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -799,18 +801,18 @@ aside [class*="sponsor"] {
   }
 }
 
-/* Collapse 2-Column Split into Single Column on Medium Screens */
+/* Medium Breakpoint: Top Row and Bottom Row Collapse to Vertical Stack */
 @media (max-width: 991.98px) {
-  .bfc-home-grid {
+  .bfc-home-top-row {
     display: flex !important;
     flex-direction: column !important;
-    gap: 20px !important;
+    gap: 16px !important;
   }
 
-  .bfc-home-cards {
+  .bfc-home-cards-row {
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
-    gap: 12px !important;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 14px !important;
   }
 }
 
@@ -876,7 +878,7 @@ aside [class*="sponsor"] {
   }
 
   /* Mobile In-Card Hero Typography */
-  .bfc-home-container h1 {
+  .bfc-home-hero-card h1 {
     font-size: 32px !important;
     line-height: 1.05 !important;
     margin-bottom: 10px !important;
@@ -905,9 +907,16 @@ aside [class*="sponsor"] {
   }
 
   /* Mobile 3 Lower Cards Stack Vertically */
-  .bfc-home-cards {
+  .bfc-home-cards-row {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
+  }
+
+  /* Mobile Carousel Slide Sizing */
+  .bfc-home-feed-card #curator-feed-default-feed-layout .crt-post,
+  .bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-c {
+    min-width: 260px !important;
+    max-width: 85vw !important;
   }
 
   /* Sidebar Grid: Isolates Fixtures full-width, pairs sponsors 2-by-2 */
