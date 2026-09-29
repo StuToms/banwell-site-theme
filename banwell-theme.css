@@ -3,18 +3,16 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.12.0
+   Version:     2.12.1
    Date:        29 September 2026
-   Build Notes: Option A Architecture — Full-Width Stadium Matchday Suite:
-                - Suppresses MyClubPro ghost columns; centers full layout at 1080px.
-                - Charcoal hero lounge sits proud on top with symmetrical buttons.
-                - 3 Feature cards locked in a generous 3-column row across the middle.
-                - Curator carousel anchored in a full-width lower card: shows 3 clean,
-                  readable cards side-by-side with hard height locks and 4-line
-                  CSS text clamping to permanently eliminate skyscraper stretching.
-                - Mobile (< 768px): 96px centered crest, pinned accreditation badge,
-                  full-width stacked buttons, and touch-optimized card stacking.
-                - Retains all forensic tracing, sponsor plinths, and 0.42s View Transitions.
+   Build Notes: Hero & Curator Card Color Harmonization:
+                - Styles .bfc-curator-card with matching dark stadium lounge 
+                  aesthetics: rgba(12, 12, 12, 0.92) backdrop, 8px blur, 5px red border.
+                - Header typography aligned with white Bebas Neue and uppercase red subtext.
+                - Curator carousel cards styled as clean white plinths with shadow depth.
+                - Navigation arrows given high-contrast circular backing.
+                - Retains 96px mobile crest, pinned accreditation badge, full
+                  sponsor plinths with table stacking, and 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -147,11 +145,20 @@ section.position-relative .container {
   gap: 14px !important;
 }
 
-/* --- 4. CURATOR.IO FULL-WIDTH STABILIZED CAROUSEL --- */
+/* --- 4. CURATOR.IO CHARCOAL STADIUM CARD & CAROUSEL LOCK --- */
 .bfc-curator-card {
-  max-height: 560px !important;
+  backdrop-filter: blur(8px) !important;
+  background: rgba(12, 12, 12, 0.92) !important;
+  border-left: 5px solid var(--banwell-red) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+  max-height: 565px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
+}
+
+.bfc-curator-card h3 {
+  color: #ffffff !important;
 }
 
 #curator-feed-default-feed-layout {
@@ -175,7 +182,7 @@ section.position-relative .container {
   overflow: hidden !important;
 }
 
-/* Individual card constraints: exactly 3 cards fit across 1080px */
+/* Individual card slides rendered as crisp white plinths */
 #curator-feed-default-feed-layout .crt-post,
 #curator-feed-default-feed-layout .crt-post-c,
 #curator-feed-default-feed-layout .crt-post-border {
@@ -183,6 +190,9 @@ section.position-relative .container {
   max-width: 335px !important;
   height: 435px !important;
   max-height: 435px !important;
+  background: #ffffff !important;
+  border-radius: 6px !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35) !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   display: flex !important;
@@ -213,6 +223,7 @@ section.position-relative .container {
   max-height: 185px !important;
   overflow: hidden !important;
   padding: 10px 14px !important;
+  background: #ffffff !important;
 }
 
 #curator-feed-default-feed-layout .crt-post-text,
@@ -231,14 +242,17 @@ section.position-relative .container {
   font-size: 13px !important;
 }
 
-/* Carousel Arrow Controls */
+/* Carousel Arrow Controls with Dark Backdrop Contrast */
 #curator-feed-default-feed-layout .crt-feed-carousel-prev,
 #curator-feed-default-feed-layout .crt-feed-carousel-next,
 #curator-feed-default-feed-layout .crt-carousel-prev,
 #curator-feed-default-feed-layout .crt-carousel-next {
   z-index: 50 !important;
-  opacity: 0.9 !important;
+  opacity: 0.95 !important;
   pointer-events: auto !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* --- 5. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
