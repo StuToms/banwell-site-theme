@@ -3,16 +3,16 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.11.1
+   Version:     2.11.2
    Date:        29 September 2026
-   Build Notes: Full-Width Parent Breakout & Proportional Desktop Split:
-                - Overrides MyClubPro's native col-lg-5/6 restriction via 
-                  :has(.bfc-home-grid), unlocking the true 1380px container width.
-                - Desktop (>= 992px):
-                  * Left Column (~760px): Hero Lounge + 3 Cards across the bottom.
-                  * Right Column (~480px): Spacious Curator Social Feed.
-                - Prevents word-fracturing and vertical skyscraper stretching.
-                - Mobile (< 992px): Single-column stack (Hero -> Cards -> Feed).
+   Build Notes: Ghost Column Elimination & Rigid Desktop 2-Column Split:
+                - Suppresses MyClubPro's native right-hand spacer column via
+                  .row:has(.bfc-home-grid) > [class*="col-"]:not(:has(.bfc-home-grid)).
+                - Forces content container to full 100% width (1380px max-width).
+                - Desktop (>= 992px): Left Column (~760px) holds Hero + 3 Cards;
+                  Right Column (~460px) holds stabilized Curator Social Feed.
+                - Hard height clamps eliminate the 3,000px skyscraper page stretch.
+                - Mobile (< 992px): Clean single-column stack (Hero -> Cards -> Feed).
                 - Retains 96px mobile crest, pinned accreditation badge, full
                   sponsor plinths with table stacking, and 0.42s View Transitions.
    ========================================================================== */
@@ -85,7 +85,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE & FULL-WIDTH PARENT BREAKOUT --- */
+/* --- 3. HOMEPAGE HERO IMAGE & GHOST COLUMN ELIMINATION --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -114,19 +114,20 @@ section.position-relative .container {
   padding-top: 18px !important;
 }
 
-/* Break out of MyClubPro's restricted half-width column */
-.row:has(.bfc-home-grid),
-div[class*="col-"]:has(.bfc-home-grid),
-.welcome-card:has(.bfc-home-grid) {
+/* 1. Hide MyClubPro's empty right-hand ghost spacer column */
+.row:has(.bfc-home-grid) > [class*="col-"]:not(:has(.bfc-home-grid)) {
+  display: none !important;
+}
+
+/* 2. Force content column and cards to seize full 100% row width */
+.row:has(.bfc-home-grid) > [class*="col-"]:has(.bfc-home-grid),
+.welcome-card:has(.bfc-home-grid),
+.welcome-card:has(.bfc-home-grid) .card-body {
   width: 100% !important;
   max-width: 100% !important;
   flex: 0 0 100% !important;
-}
-
-.welcome-card,
-.welcome-card .card-body {
   padding: 0 !important;
-  margin-top: 0 !important;
+  margin: 0 !important;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -139,13 +140,13 @@ div[class*="col-"]:has(.bfc-home-grid),
   display: none !important;
 }
 
-/* Desktop 2-Column Split */
+/* Desktop 2-Column Split: Left Information (58%) & Right Social Feed (42%) */
 @media (min-width: 992px) {
   .bfc-home-grid {
     display: grid !important;
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) !important;
+    grid-template-columns: minmax(0, 1.42fr) minmax(0, 1fr) !important;
     gap: 24px !important;
-    align-items: stretch !important;
+    align-items: start !important;
   }
 
   .bfc-home-info-col {
@@ -160,7 +161,8 @@ div[class*="col-"]:has(.bfc-home-grid),
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
-    height: 100% !important;
+    max-height: 520px !important;
+    box-sizing: border-box !important;
   }
 
   .bfc-home-cards {
@@ -174,10 +176,11 @@ div[class*="col-"]:has(.bfc-home-grid),
 .bfc-home-feed-col #curator-feed-default-feed-layout {
   width: 100% !important;
   max-width: 100% !important;
+  height: 440px !important;
+  max-height: 440px !important;
   overflow: hidden !important;
   min-width: 0 !important;
   display: block !important;
-  flex: 1 1 auto !important;
 }
 
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-carousel,
@@ -185,6 +188,8 @@ div[class*="col-"]:has(.bfc-home-grid),
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-feed-container {
   width: 100% !important;
   max-width: 100% !important;
+  height: 430px !important;
+  max-height: 430px !important;
   margin: 0 auto !important;
   overflow: hidden !important;
 }
@@ -195,8 +200,8 @@ div[class*="col-"]:has(.bfc-home-grid),
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-border {
   min-width: 280px !important;
   max-width: 320px !important;
-  height: 450px !important;
-  max-height: 450px !important;
+  height: 420px !important;
+  max-height: 420px !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
   display: flex !important;
@@ -224,7 +229,7 @@ div[class*="col-"]:has(.bfc-home-grid),
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-content,
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-body {
   flex: 1 1 auto !important;
-  max-height: 190px !important;
+  max-height: 180px !important;
   overflow: hidden !important;
   padding: 10px 14px !important;
 }
@@ -234,16 +239,16 @@ div[class*="col-"]:has(.bfc-home-grid),
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-c-text,
 .bfc-home-feed-col #curator-feed-default-feed-layout [class*="crt-post-text"],
 .bfc-home-feed-col #curator-feed-default-feed-layout .crt-post-desc {
-  max-height: 72px !important;
+  max-height: 70px !important;
   overflow: hidden !important;
   display: -webkit-box !important;
   -webkit-line-clamp: 4 !important;
   -webkit-box-orient: vertical !important;
   text-overflow: ellipsis !important;
-  line-height: 1.4 !important;
+  line-height: 1.35 !important;
   margin-bottom: 0 !important;
   color: #334155 !important;
-  font-size: 13px !important;
+  font-size: 12.5px !important;
 }
 
 /* Navigation Arrow Visibility */
@@ -853,6 +858,7 @@ aside [class*="sponsor"] {
 
   .bfc-home-feed-col {
     width: 100% !important;
+    max-height: none !important;
     height: auto !important;
   }
 }
