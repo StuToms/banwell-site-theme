@@ -3,14 +3,15 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.1
-   Date:        15 September 2026
-   Build Notes: Hero CTA buttons optimized:
-                - Desktop: Symmetrical min-width (210px) with centered flex alignment.
-                - Mobile: Full-width (100%) stacked touch targets eliminating ragged edges.
-                - Hardened with attribute selectors to survive WYSIWYG class-stripping.
-                - Retains 96px mobile crest, pinned accreditation badge, in-page
-                  sponsor plinth suite with table stacking, and 0.42s View Transitions.
+   Version:     2.10.2
+   Date:        29 September 2026
+   Build Notes: Desktop Split Layout & Curator Carousel Stabilization:
+                - Desktop (>= 992px): 2-column layout (58% Left Content / 42% Live Feed).
+                - Curator Stabilization: Clamps post text and locks card heights to
+                  eliminate vertical jumpiness when long match reports load.
+                - Mobile (< 992px): Clean single-column stack with full touch targets.
+                - Retains 96px mobile crest, pinned accreditation badge, full
+                  sponsor plinths, and 0.42s View Transitions.
    ========================================================================== */
 
 /* --- 1. FONTS & DESIGN TOKENS --- */
@@ -81,7 +82,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE & SEAMLESS TIGHT INTEGRATION --- */
+/* --- 3. HOMEPAGE HERO IMAGE & 2-COLUMN DESKTOP SPLIT --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -105,6 +106,8 @@ section.position-relative {
 section.position-relative .container {
   position: relative !important;
   z-index: 2 !important;
+  max-width: 1320px !important;
+  width: 95% !important;
 }
 
 /* Eliminate top void above Hero content */
@@ -131,7 +134,46 @@ section.position-relative .container {
   display: none !important;
 }
 
-/* --- 4. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
+/* Desktop Split: Left Content (58%) & Right Social Feed (42%) */
+@media (min-width: 992px) {
+  .bfc-home-grid {
+    grid-template-columns: 1.35fr 1fr !important;
+    align-items: start !important;
+  }
+}
+
+/* --- 4. CURATOR.IO CAROUSEL STABILIZATION --- */
+#curator-feed-default-feed-layout .crt-feed-carousel {
+  margin: 0 auto !important;
+}
+
+/* Clamp maximum post card height to prevent layout stretching */
+#curator-feed-default-feed-layout .crt-post {
+  max-height: 520px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+/* Clamp long post captions to 4 lines with ellipsis */
+#curator-feed-default-feed-layout .crt-post-text,
+#curator-feed-default-feed-layout .crt-post-c-text {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.4 !important;
+  max-height: 5.6em !important;
+}
+
+/* Prevent image blow-outs inside the carousel card */
+#curator-feed-default-feed-layout .crt-post-media img {
+  max-height: 280px !important;
+  object-fit: cover !important;
+  width: 100% !important;
+}
+
+/* --- 5. IMPERMEABLE HEADER & SEAMLESS NAVIGATION BAR --- */
 header,
 #header,
 .header,
@@ -225,7 +267,7 @@ header .club-colour-bg,
   background: transparent !important;
 }
 
-/* --- 5. SUB-PAGE TABS & BUTTONS --- */
+/* --- 6. SUB-PAGE TABS & BUTTONS --- */
 .nav:not(.navbar-nav) .nav-link {
   font-size: 19px !important;
   color: #334155 !important;
@@ -242,7 +284,6 @@ header .club-colour-bg,
   color: var(--banwell-red) !important;
 }
 
-/* Standard Buttons & "View All Fixtures" Reset */
 .border-button,
 .btn-primary,
 a.button.club-colour-bg,
@@ -283,12 +324,12 @@ div[style*="rgba(12, 12, 12"] a[href*="mailto:secretary"] {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-width: 210px !important;
-  height: 46px !important;
-  padding: 0 20px !important;
+  min-width: 200px !important;
+  height: 44px !important;
+  padding: 0 18px !important;
   box-sizing: border-box !important;
   font-family: 'Bebas Neue', sans-serif !important;
-  font-size: 19px !important;
+  font-size: 18px !important;
   letter-spacing: 1px !important;
   text-transform: uppercase !important;
   text-decoration: none !important;
@@ -334,7 +375,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   6. BIDIRECTIONAL DROPDOWNS & MUTUAL EXCLUSION HOVER CONTROLS
+   7. BIDIRECTIONAL DROPDOWNS & MUTUAL EXCLUSION HOVER CONTROLS
    ========================================================================== */
 
 .dropdown-menu {
@@ -503,7 +544,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 }
 
 /* ==========================================================================
-   7. EXECUTIVE SPONSOR PLAQUES (SIDEBAR)
+   8. EXECUTIVE SPONSOR PLAQUES (SIDEBAR)
    ========================================================================== */
 
 .col-lg-3 .card:has(img),
@@ -598,7 +639,7 @@ aside [class*="sponsor"] {
 }
 
 /* ==========================================================================
-   8. IN-PAGE STADIUM SPONSOR LOUNGE (.bfc-sponsor-lounge)
+   9. IN-PAGE STADIUM SPONSOR LOUNGE (.bfc-sponsor-lounge)
    ========================================================================== */
 
 .bfc-sponsor-lounge {
@@ -686,7 +727,7 @@ aside [class*="sponsor"] {
 }
 
 /* ==========================================================================
-   9. CROSS-DEVICE RESPONSIVE HARDENING & MOBILE HEADER ENHANCEMENT
+   10. CROSS-DEVICE RESPONSIVE HARDENING & MOBILE HEADER ENHANCEMENT
    ========================================================================== */
 
 /* Tablet Breakpoints (768px – 1199.98px) */
@@ -734,7 +775,7 @@ aside [class*="sponsor"] {
     justify-content: center !important;
   }
 
-  /* Enlarge Crest on Mobile */
+  /* 96px Mobile Crest */
   .header-top #badge {
     display: block !important;
     margin: 0 auto !important;
@@ -747,7 +788,7 @@ aside [class*="sponsor"] {
     background-size: contain !important;
   }
 
-  /* Pin Accreditation Badge to Far Right */
+  /* Pinned Accreditation Badge */
   .header-top .charter-standard,
   .header-top .header-logos,
   .header-top [class*="charter"] {
@@ -768,13 +809,6 @@ aside [class*="sponsor"] {
   #team-name,
   .header-top .d-none.d-sm-flex {
     display: none !important;
-  }
-
-  /* Responsive In-Card Hero Typography */
-  .bfc-home-container h1 {
-    font-size: 32px !important;
-    line-height: 1.05 !important;
-    margin-bottom: 10px !important;
   }
 
   /* Mobile Full-Width Stacked Hero CTA Buttons */
