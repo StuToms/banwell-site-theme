@@ -3,15 +3,14 @@
    Platform:    MyClubPro V3
    Repository:  banwell-site-theme
    File:        banwell-theme.css
-   Version:     2.10.6
+   Version:     2.10.7
    Date:        29 September 2026
-   Build Notes: Perfected Split Layout Architecture:
-                - Top Row (>= 992px): 2-column split (Hero Lounge 58% / Social Feed 42%).
-                - Bottom Row: 3 Feature cards span full 100% width across the bottom,
-                  restoring generous ~400px columns and eliminating narrow text ribbons.
-                - Curator Carousel locked to right-hand card with 4-line text clamping
-                  and uniform media frames, preventing vertical jumps without Pro tier.
-                - Mobile (< 992px): Smooth single-column stack with full touch accessibility.
+   Build Notes: Layout Restored & Curator Bleed Eradicated:
+                - Container expanded to 1060px, perfectly balanced over pitch.
+                - 3 Feature cards locked in strict 3-column row above feed.
+                - Curator feed locked into full-width card below with overflow hidden;
+                  posts restricted to 320px width and clamped to 4 lines, preventing
+                  page expansion or infinite column spawning.
                 - Retains 96px mobile crest, pinned accreditation badge, in-page
                   sponsor plinths with table stacking, and 0.42s View Transitions.
    ========================================================================== */
@@ -84,7 +83,7 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 1px !important;
 }
 
-/* --- 3. HOMEPAGE HERO IMAGE & BALANCED CONTAINER --- */
+/* --- 3. HOMEPAGE HERO IMAGE & CONTAINER ALIGNMENT --- */
 .home-hero-image,
 img.home-hero-image,
 section .home-hero-image {
@@ -108,8 +107,8 @@ section.position-relative {
 section.position-relative .container {
   position: relative !important;
   z-index: 2 !important;
-  max-width: 1420px !important;
-  width: 96% !important;
+  max-width: 1140px !important;
+  width: 95% !important;
 }
 
 /* Eliminate top void above Hero content */
@@ -136,43 +135,36 @@ section.position-relative .container {
   display: none !important;
 }
 
-/* Desktop 2-Column Top Row & Full-Width 3-Card Bottom Row */
-@media (min-width: 992px) {
-  .bfc-home-top-row {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1.4fr) minmax(360px, 1fr) !important;
-    gap: 20px !important;
-    align-items: stretch !important;
-  }
-
-  .bfc-home-cards-row {
-    display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 16px !important;
-    width: 100% !important;
-  }
+/* 3 Lower Cards Row Locking */
+.bfc-home-cards {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 14px !important;
 }
 
-/* --- 4. CURATOR.IO CONTROLLED CAROUSEL CONTAINMENT --- */
-.bfc-home-feed-card #curator-feed-default-feed-layout {
+/* --- 4. STRICT CURATOR.IO OVERFLOW CONTAINMENT --- */
+#curator-feed-default-feed-layout {
   width: 100% !important;
   max-width: 100% !important;
   overflow: hidden !important;
+  display: block !important;
+  box-sizing: border-box !important;
 }
 
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-feed-carousel,
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-feed-carousel-window {
+#curator-feed-default-feed-layout .crt-feed-carousel,
+#curator-feed-default-feed-layout .crt-feed-carousel-window,
+#curator-feed-default-feed-layout .crt-feed-container {
   width: 100% !important;
+  max-width: 100% !important;
   margin: 0 auto !important;
   overflow: hidden !important;
 }
 
-/* Post slide dimension lock */
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post,
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-c {
-  width: 100% !important;
-  min-width: 100% !important;
-  max-width: 100% !important;
+/* Constrain individual cards */
+#curator-feed-default-feed-layout .crt-post,
+#curator-feed-default-feed-layout .crt-post-c {
+  min-width: 300px !important;
+  max-width: 340px !important;
   height: 480px !important;
   max-height: 480px !important;
   overflow: hidden !important;
@@ -181,8 +173,8 @@ section.position-relative .container {
   flex-direction: column !important;
 }
 
-/* Uniform media frame */
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-media {
+/* Media frame */
+#curator-feed-default-feed-layout .crt-post-media {
   height: 240px !important;
   max-height: 240px !important;
   min-height: 240px !important;
@@ -190,8 +182,8 @@ section.position-relative .container {
   flex-shrink: 0 !important;
 }
 
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-media img,
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-media video {
+#curator-feed-default-feed-layout .crt-post-media img,
+#curator-feed-default-feed-layout .crt-post-media video {
   height: 100% !important;
   width: 100% !important;
   object-fit: cover !important;
@@ -199,18 +191,18 @@ section.position-relative .container {
 }
 
 /* Content padding */
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-content,
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-body {
+#curator-feed-default-feed-layout .crt-post-content,
+#curator-feed-default-feed-layout .crt-post-body {
   flex: 1 1 auto !important;
   overflow: hidden !important;
   padding: 12px 14px !important;
 }
 
-/* 4-Line text clamping (replaces Pro Plan character truncation) */
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-text,
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-c-text,
-.bfc-home-feed-card #curator-feed-default-feed-layout [class*="crt-post-text"],
-.bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-desc {
+/* 4-Line text clamping */
+#curator-feed-default-feed-layout .crt-post-text,
+#curator-feed-default-feed-layout .crt-post-c-text,
+#curator-feed-default-feed-layout [class*="crt-post-text"],
+#curator-feed-default-feed-layout .crt-post-desc {
   display: -webkit-box !important;
   -webkit-line-clamp: 4 !important;
   -webkit-box-orient: vertical !important;
@@ -427,7 +419,7 @@ div[class*="report"]:has(a[href*="/match-report"]),
 
 /* ==========================================================================
    7. BIDIRECTIONAL DROPDOWNS & MUTUAL EXCLUSION HOVER CONTROLS
-   ========================================================================== */
+   ========================================================================= */
 
 .dropdown-menu {
   position: absolute !important;
@@ -801,18 +793,11 @@ aside [class*="sponsor"] {
   }
 }
 
-/* Medium Breakpoint: Top Row and Bottom Row Collapse to Vertical Stack */
+/* Tablet: Feature Cards Column Wrap */
 @media (max-width: 991.98px) {
-  .bfc-home-top-row {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 16px !important;
-  }
-
-  .bfc-home-cards-row {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
-    gap: 14px !important;
+  .bfc-home-cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+    gap: 12px !important;
   }
 }
 
@@ -878,7 +863,7 @@ aside [class*="sponsor"] {
   }
 
   /* Mobile In-Card Hero Typography */
-  .bfc-home-hero-card h1 {
+  .bfc-home-container h1 {
     font-size: 32px !important;
     line-height: 1.05 !important;
     margin-bottom: 10px !important;
@@ -907,14 +892,14 @@ aside [class*="sponsor"] {
   }
 
   /* Mobile 3 Lower Cards Stack Vertically */
-  .bfc-home-cards-row {
+  .bfc-home-cards {
     grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
 
   /* Mobile Carousel Slide Sizing */
-  .bfc-home-feed-card #curator-feed-default-feed-layout .crt-post,
-  .bfc-home-feed-card #curator-feed-default-feed-layout .crt-post-c {
+  #curator-feed-default-feed-layout .crt-post,
+  #curator-feed-default-feed-layout .crt-post-c {
     min-width: 260px !important;
     max-width: 85vw !important;
   }
